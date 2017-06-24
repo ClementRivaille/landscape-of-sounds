@@ -1,0 +1,23 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "no-throw-literal": 1,
+    "strict": "error",
+    "quotes": [2, "single"],
+    "no-var": 1,
+    "eol-last": 1,
+    "no-new-require": 1,
+    "no-sync": 1,
+    "no-mixed-requires": [1, false],
+    "no-unused-vars": "error",
+    "no-undef": "error",
+    "no-console": 1
+  },
+  "globals": {
+    "window": false
+  }
+}
