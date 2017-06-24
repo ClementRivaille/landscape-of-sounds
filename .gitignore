@@ -2,4 +2,3 @@ node_modules
 dev
 *.sublime-project
 *.sublime-workspace
-bundle.js
