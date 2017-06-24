@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="./bundle.js"></script>
+  </head>
+  <body>
+    <div style="float: right"><button onclick="switchChord()">Change chord</button></div>
+    <h2>Bass</h2>
+    <div><button onclick="playA4()">Piano Bass</button></div>
+    <br/>
+    <h2>Sine Synth</h2>
+    <div><button onclick="turnSynthOn()">Synth (on)</button></div>
+    <div><button onclick="turnSynthOff()">Synth (off)</button></div>
+    <div><button onclick="changeSynthFrequency()">Random Frequency</button></div>
+    <br/>
+    <h2>Bells</h2>
+    <button onclick="playBells()">Ring</button>
+    <br/>
+
+    <h2>Violin</h2>
+    <div><button onclick="playViolin()">Activate Violin</button></div>
+    <div><button onclick="waveViolinFreq()">Frequency</button></div>
+    
+    <h2>Harp</h2>
+    <div><button onclick="playSquareHarp()">Play</button></div>
+    <div><button onclick="switchHarpPace()">Pace</button></div>
+
+    <h2>Vibraphone</h2>
+    <div><button onclick="playVibraphone()">Play</button></div>
+
+    <h2>Clavecin</h2>
+    <div><button onclick="playChordBeat()">Play</button></div>
+    <!-- <div><button onclick="switchHarpPace()">Pace</button></div> -->
+
+    <h2>Triangle Synth</h2>
+    <div><button onclick="switchTriangle()">Play</button></div>
+    <div><button onclick="changeTriangleFrequency()">Random frequency</button></div>
+
+    <h2>Tuba</h2>
+    <div><button onclick="switchWaveBass()">Activate</button></div>
+
+    <h2>Whistle</h2>
+    <div><button onclick="playWhistle()">Play</button></div>
+  </body>
+</html>
