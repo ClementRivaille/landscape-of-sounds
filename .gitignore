@@ -3,3 +3,4 @@ dev
 *.sublime-project
 *.sublime-workspace
 bundle.js
+*.map
