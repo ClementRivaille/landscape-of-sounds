@@ -66,6 +66,11 @@ class TriangleChord {
   setFilterFrequency(frequency, delay=4000) {
     this.soundConsole.progressiveChange(this.filter, 'frequency', frequency, 'filterFreq', delay);
   }
+
+  setWahWah(amplitude, delay) {
+    this.soundConsole.sineWave.stopSine('wahwah');
+    this.soundConsole.sineWave(this.wahwahFilter, 'frequency', amplitude, delay, 'wahwah');
+  }
 }
 
 export default TriangleChord;

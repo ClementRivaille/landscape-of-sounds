@@ -4,3 +4,4 @@ dev
 *.sublime-workspace
 bundle.js
 *.map
+npm-debug.log

@@ -26,6 +26,7 @@ class Whistle {
 
     sound.addEffect(new Pizzicato.Effects.LowPassFilter(this.lowFilter));
     // sound.addEffect(new Pizzicato.Effects.Reverb(this.reverb));
+    sound.addEffect(new Pizzicato.Effects.Delay(this.delay));
 
     return sound;
   }
@@ -49,7 +50,13 @@ class Whistle {
         decay: 0,
         reverse: false,
         mix: 0.8
-    };    
+    };
+
+    this.delay = {
+        feedback: 0.6,
+        time: 0.4,
+        mix: 0.5
+    };               
   }
 
   turnVolume(volume, delay = 4000) {
@@ -90,12 +97,8 @@ class Whistle {
     }, this.options.pace)
   }
 
-  setLowFilterProperty(property, value, delay=4000) {
+  setLowFilterProperty(property, value, delay=100) {
     this.soundConsole.triangle(this.lowFilter, property, value, 'lowFilter-' + property, delay);
-  }
-
-  setReverbProperty(property, value, delay=4000) {
-    this.soundConsole.progressiveChange(this.reverb, property, value, 'reverb-' + property, delay);
   }
 }
 

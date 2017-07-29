@@ -14,7 +14,7 @@ function makeSound() {
   });
 }
 
-class WaveBass {
+class Tuba {
 
   constructor() {
     this.soundConsole = new SoundConsole();
@@ -55,11 +55,6 @@ class WaveBass {
     });
   }
 
-  stop(delay=1000) {
-    this.soundConsole.stopSine('waveVolume');
-    this.soundConsole.progressiveChange(this.synth, 'volume', 0, 'volumeStop', delay);
-  }
-
   setNote(note) {
     this.sound1.frequency = teoria.note(note).fq();
     this.sound2.frequency = teoria.note(note).interval('P-8').fq();
@@ -70,4 +65,4 @@ class WaveBass {
   }
 }
 
-export default WaveBass;
+export default Tuba;

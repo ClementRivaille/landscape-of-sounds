@@ -18,33 +18,52 @@ class VibraphonePlayer extends Player {
     };
   }
 
-  changeMeasure(index, noteIndex, chord) {
+  changeMeasure(index) {
     let measure = this.sheet[index];
 
-    this.harp.setChord(this.color.notes()[noteIndex], chord);
-
+    this.active = measure.active;
     this.pace = measure.pace;
-    if (!this.active && measure.playing) {
-      setTimeout(() => {
-        this.play();
-      }, measure.pace)
+    this.interval = measure.interval;
+    this.multiple = measure.multiple;
+
+    if (measure.active && !this.playing) {
+      this.play(measure.multiple ? 1 + Math.floor(Math.random() * 2) : 1);
+      this.playing = true;
     }
-    this.active = measure.playing;
+    else if (!measure.active) {
+      this.playing = false;
+    }
 
     if (measure.filter) {
       this.vibraphone.setHighFilterProperty('peak', this.settings.filters[measure.filter.level]);
     }
   }
 
-  play() {
-    let noteIndex = Math.floor(Math.random() * this.color.notes().length);
-    this.vibraphone.play(this.color.notes()[noteIndex].scientific());
+  play(nbNotes) {
+    let notes = [];
+    for (let i = 0 ; i < nbNotes ; i++) {
+      notes.push(Math.floor(Math.random() * this.color.notes().length));
+    }
+
+    notes.reduce((promise, noteIndex) => {
+      return promise.then(() => {
+        this.vibraphone.play(this.color.notes()[noteIndex].scientific());
+        return new Promise((resolve) => setTimeout(resolve, this.interval));
+      });
+    }, Promise.resolve());
 
     if (this.active) {
+      let randomDelay = 0.2 * this.pace;
       setTimeout(() => {
-        this.play();
-      }, this.pace);
+        this.play(this.multiple ? 1 + Math.floor(Math.random() * 2) : 1);
+      }, this.pace + (Math.random() * 2 * randomDelay - (randomDelay / 2)));
     }
+  }
+
+  stop() {
+    this.active = false;
+    this.playing = false;
+    super.stop();
   }
 
 }
