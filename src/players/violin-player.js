@@ -43,7 +43,7 @@ class SynthPadPlayer extends Player {
     }
   }
 
-  changeMeasure(index) {
+  changeMeasure(index, note, chord, mixolydian) {
     let measure = this.sheet[index];
 
     if (measure.filter) {
@@ -61,7 +61,7 @@ class SynthPadPlayer extends Player {
 
     if (measure.play) {
       this.state.notes = this.settings.patterns[measure.play.patern].map((noteIndex) => {
-        let note = this.color.notes()[noteIndex - 1 % 7];
+        let note = (mixolydian ? this.mixolydian : this.color).notes()[noteIndex - 1 % 7];
         for (let octave = 0 ; octave < Math.floor((noteIndex - 1) / 7) ; octave++) {
           note = note.interval('P8');
         }

@@ -6,7 +6,7 @@ import SquareHarp from './instruments/square-harp';
 import Vibraphone from './instruments/vibraphone';
 import ChordBeat from './instruments/chord-beat';
 import TriangleChord from './instruments/triangle-chord'
-import WaveBass from './instruments/wave-bass';
+import Tuba from './instruments/tuba';
 import Whistle from './instruments/whistle';
 
 import teoria from 'teoria';
@@ -36,7 +36,7 @@ const triangleChord = new TriangleChord();
 triangleChord.playChord('a4', 'M7');
 let trianglePlaying = false;
 
-const waveBass = new WaveBass();
+const waveBass = new Tuba();
 waveBass.setNote('E2');
 
 const whistle = new Whistle();

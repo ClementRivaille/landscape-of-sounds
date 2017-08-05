@@ -10,10 +10,10 @@ class BassPlayer extends Player {
     this.color = this.color.interval('P-8').interval('P-8');
   }
 
-  changeMeasure(index, noteIndex) {
+  changeMeasure(index, noteIndex, chord, mixolydian) {
     let measure = this.sheet[index];
 
-    let bassNote = this.color.notes()[noteIndex].scientific();
+    let bassNote = (mixolydian ? this.mixolydian : this.color).notes()[noteIndex].scientific();
 
     if (this.interval) {
       clearInterval(this.interval);

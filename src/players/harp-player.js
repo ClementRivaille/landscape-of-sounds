@@ -33,10 +33,10 @@ class HarpPlayer extends Player {
     this.playing = false;
   }
 
-  changeMeasure(index, noteIndex, chord) {
+  changeMeasure(index, noteIndex, chord, mixolydian) {
     let measure = this.sheet[index];
 
-    this.harp.setChord(this.color.notes()[noteIndex], chord);
+    this.harp.setChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex], chord);
 
     if (measure.playing && !this.playing) {
       this.harp.play();

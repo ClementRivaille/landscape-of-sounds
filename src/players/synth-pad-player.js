@@ -23,10 +23,10 @@ class SynthPadPlayer extends Player {
     };
   }
 
-  changeMeasure(index, noteIndex, chord) {
+  changeMeasure(index, noteIndex, chord, mixolydian) {
     let measure = this.sheet[index];
 
-    this.synth.playChord(this.color.notes()[noteIndex], chord);
+    this.synth.playChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex], chord);
 
     if (measure.volume) {
       this.synth.turnVolume(this.levels.volumes[measure.volume.level], measure.volume.speed);

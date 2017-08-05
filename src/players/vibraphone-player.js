@@ -16,15 +16,17 @@ class VibraphonePlayer extends Player {
         3: 6
       }
     };
+    this.mixolydianActive = false;
   }
 
-  changeMeasure(index) {
+  changeMeasure(index, noteIndex, chord, mixolydian) {
     let measure = this.sheet[index];
 
     this.active = measure.active;
     this.pace = measure.pace;
     this.interval = measure.interval;
     this.multiple = measure.multiple;
+    this.mixolydianActive = mixolydian;
 
     if (measure.active && !this.playing) {
       this.play(measure.multiple ? 1 + Math.floor(Math.random() * 2) : 1);
@@ -47,7 +49,7 @@ class VibraphonePlayer extends Player {
 
     notes.reduce((promise, noteIndex) => {
       return promise.then(() => {
-        this.vibraphone.play(this.color.notes()[noteIndex].scientific());
+        this.vibraphone.play((this.mixolydianActive ? this.mixolydian : this.color).notes()[noteIndex].scientific());
         return new Promise((resolve) => setTimeout(resolve, this.interval));
       });
     }, Promise.resolve());

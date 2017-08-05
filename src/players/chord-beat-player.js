@@ -28,20 +28,21 @@ class ChordBeatPlayer extends Player {
     }
   }
 
-  changeMeasure(index, noteIndex) {
-    let measure = this.sheet[index];
+  changeMeasure(index, noteIndex, chord, mixolydian) {
+    let measure = this.sheet[index]
+    let scale = mixolydian ? this.mixolydian : this.color;
 
     if (measure.active) {
       let notes = [];
       if (measure.global) {
-        notes.push(this.color.notes()[2].scientific());
-        notes.push(this.color.notes()[4].scientific());
-        notes.push(this.color.notes()[1].interval('P8').scientific());
+        notes.push(scale.notes()[2].scientific());
+        notes.push(scale.notes()[4].scientific());
+        notes.push(scale.notes()[1].interval('P8').scientific());
       }
       else {
         for (let interval of [2, 4, 8]) {
-          let chordIndex = (noteIndex + interval) % this.color.notes().length;
-          let note = this.color.notes()[chordIndex];
+          let chordIndex = (noteIndex + interval) % scale.notes().length;
+          let note = scale.notes()[chordIndex];
           if (chordIndex === 0) {
             note = note.interval('P8');
           }

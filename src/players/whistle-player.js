@@ -23,7 +23,8 @@ class WhistlePlayer extends Player {
       let pattern = [];
       let nbNotes = 3 + Math.round(Math.random());
       for (let j = 0 ; j < nbNotes ; j++) {
-        pattern.push(this.color.notes()[Math.floor(Math.random() * this.color.notes().length)].scientific());
+        // third pattern is mixolydian
+        pattern.push((i < 2 ? this.color : this.mixolydian).notes()[Math.floor(Math.random() * this.color.notes().length)].scientific());
       }
       this.settings.patterns.push(pattern);
     }

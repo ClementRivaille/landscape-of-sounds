@@ -6,6 +6,7 @@ class Player {
     this.eventEmitter = eventEmitter;
     this.sheet = sheet;
     this.color = teoria.scale(tonic, 'major');
+    this.mixolydian = teoria.scale(tonic, 'mixolydian');
 
     this.changeMeasure = this.changeMeasure.bind(this);
     this.stop = this.stop.bind(this);
