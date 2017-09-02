@@ -26,7 +26,7 @@ class HarpPlayer extends Player {
         0: 600,
         1: 300,
         2: 100,
-        4: 50
+        3: 50
       }
     };
 
@@ -36,7 +36,7 @@ class HarpPlayer extends Player {
   changeMeasure(index, noteIndex, chord, mixolydian) {
     let measure = this.sheet[index];
 
-    this.harp.setChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex], chord);
+    this.harp.setChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex].interval('P-8').scientific(), chord);
 
     if (measure.playing && !this.playing) {
       this.harp.play();
@@ -47,16 +47,16 @@ class HarpPlayer extends Player {
       this.playing = false;
     }
 
-    if (measure.volume.value !== this.volume) {
+    if (measure.volume && measure.volume.level !== this.volume) {
       this.harp.turnVolume(this.settings.volumes[measure.volume.level], measure.volume.delay);
-      this.volume = measure.volume.value;
+      this.volume = measure.volume.level;
     }
 
     if (measure.filter) {
-      this.harp.setLowFilterProperty('frequency', this.settings.filters[measure.filter.level] + (Math.random * 1000 - 500), measure.filter.delay);
+      this.harp.setLowFilterProperty('frequency', this.settings.filters[measure.filter.level] + (Math.random() * 1000 - 500), measure.filter.delay);
     }
 
-    if (measure.paces && measure.paces > 0) {
+    if (measure.paces && measure.paces.length > 0) {
       measure.paces.reduce((promise, pace) => {
         return promise.then(() => {
           let rngPace = this.settings.paces[pace.level];

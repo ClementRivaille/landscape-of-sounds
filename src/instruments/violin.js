@@ -10,7 +10,7 @@ function makeSound() {
       frequency: 440,
       attack: 1,
       release: 1,
-      volume: 0.1
+      volume: 0.5
     }
   });
 }
@@ -45,6 +45,7 @@ class Violin {
   play(note) {
     if (!this._playing) {
       this.oscillator.frequency = teoria.note(note).fq();
+      this.oscillator.volume = 0.1;
       this.oscillator.play();
       this._playing = true;
     }
@@ -55,8 +56,10 @@ class Violin {
 
   stop() {
     if (this._playing) {
-      this.oscillator.stop();
-      this._playing = false;
+      this.soundConsole.progressiveChange(this.oscillator, 'volume', 0, 'violinDecay', 1000).then(() => {
+        this.oscillator.stop();
+        this._playing = false;
+      });
     }
   }
 

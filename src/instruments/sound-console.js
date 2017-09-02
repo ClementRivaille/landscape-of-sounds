@@ -14,7 +14,7 @@ class SoundConsole {
     // Clear eventual conflictual interval
     if (this.intervals[key]) {
       clearInterval(this.intervals[key].interval);
-      this.intervals[key].reject();
+      this.intervals[key].resolve();
       delete this.intervals[key];
     }
 

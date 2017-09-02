@@ -98,7 +98,7 @@ class Whistle {
   }
 
   setLowFilterProperty(property, value, delay=100) {
-    this.soundConsole.triangle(this.lowFilter, property, value, 'lowFilter-' + property, delay);
+    this.soundConsole.progressiveChange(this.lowFilter, property, value, 'lowFilter-' + property, delay);
   }
 }
 

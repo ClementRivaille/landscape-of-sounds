@@ -22,7 +22,10 @@ class EventEmitter {
   emit(event, ...args) {
     if (this.listeners[event]) {
       for (let callback of this.listeners[event]) {
-        callback(...args);
+        new Promise((resolve) => {
+          callback(...args);
+          resolve();
+        });
       }
     }
   }

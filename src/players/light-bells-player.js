@@ -19,12 +19,12 @@ class LightBellsPlayer extends Player {
 
     if (measure.tonic) {
       this.interval = setInterval(() => {
-        this.bells.ring(this.color.notes()[0], 'major');
+        this.bells.ring(this.color.notes()[0].scientific(), 'major');
       }, measure.delay);
     }
     else if (measure.chord) {
       this.interval = setInterval(() => {
-        this.bells.ring(this.color.notes()[noteIndex], chord.startsWith('M') ? 'major': 'minor');
+        this.bells.ring(this.color.notes()[noteIndex].scientific(), chord.startsWith('M') ? 'major': 'minor');
       }, measure.delay);
     }
   }

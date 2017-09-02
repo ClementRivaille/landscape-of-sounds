@@ -30,7 +30,11 @@ class SynthPadPlayer extends Player {
         }
       },
       patterns: {
-        0: [9, 10, 5, 7]
+        0: [9, 10, 5, 7],
+        1: [1, 2, 8, 9],
+        2: [5, 2, 4, 8, 6],
+        3: [1, 5, 9, 13],
+        4: [8, 2, 5, 6]
       }
     };
 
@@ -60,8 +64,8 @@ class SynthPadPlayer extends Player {
     }
 
     if (measure.play) {
-      this.state.notes = this.settings.patterns[measure.play.patern].map((noteIndex) => {
-        let note = (mixolydian ? this.mixolydian : this.color).notes()[noteIndex - 1 % 7];
+      this.state.notes = this.settings.patterns[measure.play.pattern || 0].map((noteIndex) => {
+        let note = (mixolydian ? this.mixolydian : this.color).notes()[noteIndex % 7];
         for (let octave = 0 ; octave < Math.floor((noteIndex - 1) / 7) ; octave++) {
           note = note.interval('P8');
         }
@@ -85,6 +89,7 @@ class SynthPadPlayer extends Player {
   playNotes(index) {
     if (this.state.playing) {
       this.violin.stop();
+      this.state.playing = false;
 
       if (this.state.active) {
         setTimeout(() => {
@@ -97,6 +102,7 @@ class SynthPadPlayer extends Player {
       // Reset index if pattern length has changed 
       index = index >= this.state.notes.length ? 0 : index;
       this.violin.play(this.state.notes[index]);
+      this.state.playing = true;
 
       setTimeout(() => {
         this.playNotes(index);

@@ -26,13 +26,14 @@ class SynthPadPlayer extends Player {
   changeMeasure(index, noteIndex, chord, mixolydian) {
     let measure = this.sheet[index];
 
-    this.synth.playChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex], chord);
+    this.synth.playChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex].interval('P-8').scientific(), chord);
 
     if (measure.volume) {
       this.synth.turnVolume(this.levels.volumes[measure.volume.level], measure.volume.speed);
     }
     if (measure.filter) {
-      this.synth.setLowFilterFrequency(this.levels.filters[measure.filter.level] + (Math.random * 1000 - 500), measure.filter.speed);
+      let freq = this.levels.filters[measure.filter.level] + (Math.random() * 1000 - 500);
+      this.synth.setLowFilterFrequency(freq, measure.filter.speed);
     }
   }
 

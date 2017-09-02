@@ -1,5 +1,5 @@
 import Player from './player';
-import BassPiano from './instruments/bass-piano';
+import BassPiano from '../instruments/bass-piano';
 
 class BassPlayer extends Player {
 
@@ -8,6 +8,7 @@ class BassPlayer extends Player {
     
     this.bass = new BassPiano();
     this.color = this.color.interval('P-8').interval('P-8');
+    this.mixolydian = this.mixolydian.interval('P-8').interval('P-8');
   }
 
   changeMeasure(index, noteIndex, chord, mixolydian) {
@@ -20,10 +21,12 @@ class BassPlayer extends Player {
       delete this.interval;
     }
 
-    this.play(bassNote, true);
-    this.interval = setInterval(()=> {
-      this.play(bassNote, false);
-    }, measure.interval);
+    if (measure.active) {
+      this.play(bassNote, true);
+      this.interval = setInterval(()=> {
+        this.play(bassNote, false);
+      }, measure.interval);
+    }
   }
 
   play(note, stop) {

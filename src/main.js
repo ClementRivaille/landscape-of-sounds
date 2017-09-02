@@ -9,6 +9,8 @@ import TriangleChord from './instruments/triangle-chord'
 import Tuba from './instruments/tuba';
 import Whistle from './instruments/whistle';
 
+import Conductor from './conductor';
+
 import teoria from 'teoria';
 window.teoria = teoria;
 let scaleNotes = teoria.scale('a4', 'major').notes();
@@ -133,4 +135,9 @@ window.switchChord = function() {
     squareHarp.setChord('c#3', 'm');
   }
 
+}
+
+window.createConductor = function() {
+  let conductor = new Conductor();
+  conductor.playMeasure(0);
 }

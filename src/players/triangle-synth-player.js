@@ -1,5 +1,5 @@
 import Player from './player';
-import TriangleChord from './instruments/triangle-chord'
+import TriangleChord from '../instruments/triangle-chord'
 
 class TriangleSynthPlayer extends Player {
 
