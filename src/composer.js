@@ -204,13 +204,13 @@ class Composer {
         // A
         {}, {}, {}, {},
         // B
-        {}, {}, {}, {},
+        {}, {active: true, volume: {level: 2, delay: 6000}}, {active: true}, {active: true, global: true, volume: {level: 1, delay: 4000}},
         // A
-        {}, {}, {}, {},
+        {active: true, global: true, volume: {level: 1, delay: 4000}, filter: {level: 2, delay: 8000}, compressor: {level: 2, delay: 8000}}, {active: true, global: true}, {active: true, global: true, filter: {level: 2, delay: 8000}, pace: {value: 1000, delay: 10000}}, {active: true },
         // C
-        {}, {}, {}, {},
+        {active: true, volume: {level: 0, delay: 10000}, pace: {value: 800, delay: 10000}}, {}, {}, {active: true, volume: {level: 3, delay: 8000}},
         // A
-        {}, {}, {}, {} ],
+        {active: true, volume: {level: 2, delay: 8000}, pace: {value: 600, delay: 10000}}, {active: true, volume: {level: 0, delay: 8000}}, {}, {} ],
       harp: [ {}, {},
         // A
         {}, {}, {}, {},
@@ -219,7 +219,7 @@ class Composer {
         // A
         {playing: true, filter: {level: 0, delay: 10000}}, {playing: true, volume: {level: 2, delay: 9000}, filter: {level: 1, delay: 4000}}, {playing: true, volume: {level: 1, delay: 9000}, paces: [{level: 3, delay: 5000}, {level: 1, delay: 2000}]}, {playing: true, volume: {level: 0, delay: 6000}},
         // C
-        {}, {}, {playing: true, volume: {level: 1, delay: 4000}, paces: [{level: 0, delay:2000}, {level: 2, delay: 5000}]}, {playing: true, filter: {level: 2, delay: 5000}},
+        {}, {}, {}, {playing: true, filter: {level: 2, delay: 5000}, paces: [{level: 0, delay:2000}, {level: 2, delay: 5000}]},
         // A
         {playing: true}, {}, {}, {} ],
       bells: [ {}, {},
@@ -287,33 +287,34 @@ class Composer {
         // B
         {}, {}, {}, {},
         // A
-        {}, {}, {}, {},
+        {volume: {level: 1, delay: 5000}}, {}, {filter: {level: 2, delay: 6000}}, {},
         // C
-        {}, {}, {}, {},
+        {filter: {level: 0, delay: 6000}, volume: {level: 2, delay: 5000}}, {}, {wawah: {level: 2, delay: 6000}}, {},
         // A
-        {}, {}, {}, {} ],
+        {filter: {level: 1, delay: 6000}, volume: {level: 1, delay: 5000}, wahwah: {level: 1, delay: 5000}}, {}, {volume: {level: 0, delay: 4000}}, {} ],
       tuba: [ {}, {},
         // A
         {}, {}, {}, {},
         // B
         {}, {}, {}, {},
         // A
-        {}, {}, {}, {},
+        {}, {}, {active: true, pace: 800, delay: 2500, volume: {level: 1}}, {active: true, pace: 800, delay: 2500, volume: {level: 1}},
         // C
-        {}, {}, {}, {},
+        {active: true, pace: 800, delay: 2000, volume: {level: 0}}, {active: true, pace: 800, delay: 2000, volume: {level: 0}}, {active: true, pace: 800, delay: 1800, volume: {level: 2}}, {active: true, pace: 800, delay: 2000, volume: {level: 1}},
         // A
-        {}, {}, {}, {} ],
+        {active: true, pace: 800, delay: 2500, volume: {level: 1}}, {}, {}, {} ],
       vibraphone: [ {}, {},
         // A
-        {}, {}, {}, {},
+        {}, {}, {active: true, pace: 6000, interval: 400}, {active: true, pace: 6000, interval: 400, multiple: true},
         // B
-        {}, {}, {}, {},
+        {}, {active: true, pace: 6000, interval: 400, multiple: true}, {active: true, pace: 6000, interval: 400, multiple: true}, {},
         // A
-        {}, {}, {}, {},
+        {active: true, pace: 4000, interval: 600, multiple: true}, {active: true, pace: 4000, interval: 500, multiple: true}, {}, {},
         // C
-        {}, {}, {}, {},
+        {}, {}, {}, {active: true, pace: 6000, interval: 400, multiple: true},
         // A
-        {}, {}, {}, {} ],
+        {active: true, pace: 6000, interval: 400, multiple: true}, {}, {active: true, pace: 6000, interval: 400}, {} ],
+
       violon: [ {}, {},
         // A
         {}, {}, {play: {pattern: 2, length: 2000, delay: 3500}, filter: {level: 0, speed: 4000}}, {play: {pattern: 2, length: 2000, delay: 3500}},
@@ -325,17 +326,17 @@ class Composer {
         {}, {}, {}, {},
         // A
         {}, {play: {pattern: 3, length: 2000, delay: 3500}, filter: {level: 1, speed: 4000}, tremolo: {stop: true}}, {}, {} ],
-      whistle: [ {}, {},
+      whistle: [ {}, {active: true, pattern: 0, delay: 1500, volume: {level: 2, delay: 500}, pace: {value: 300, delay: 500}},
         // A
-        {}, {}, {}, {},
+        {active: true, pattern: 0, delay: 1500, volume: {level: 1, delay: 500}}, {active: true, pattern: 1, delay: 1500}, {active: true, pattern: 2, pace: {value: 200, delay: 500}, delay: 1500}, {},
         // B
-        {}, {}, {}, {},
+        {}, {}, {active: true, pattern: 0, delay: 1500}, {},
         // A
-        {}, {}, {}, {},
+        {}, {}, {active: true, pattern: 1, pace: {value: 300, delay: 500}, delay: 1500}, {active: true, pattern: 1, delay: 1500},
         // C
-        {}, {}, {}, {},
+        {active: true, pattern: 0, delay: 1500, pace: {value: 200, delay: 500}}, {active: true, pattern: 1}, {active: true, pattern: 2, delay: 1500}, {active: true, pattern: 1, delay: 1500},
         // A
-        {}, {}, {}, {} ]
+        {active: true, pattern: 0, delay: 1500, pace: {value: 300, delay: 500}}, {active: true, pattern: 2, delay: 1500}, {active: true, pattern: 0, delay: 1500}, {} ]
     };
   }
   

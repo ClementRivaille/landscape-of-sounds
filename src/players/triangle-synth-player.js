@@ -12,7 +12,7 @@ class TriangleSynthPlayer extends Player {
       volumes: {
         0: 0,
         1: 0.1,
-        2: 0.2
+        2: 0.15
       },
       filters:
       {
@@ -21,9 +21,9 @@ class TriangleSynthPlayer extends Player {
         2: 3000
       },
       wahwah: {
-        1: 1000,
-        2: 1500,
-        3: 2500
+        0: 1000,
+        1: 1500,
+        2: 2500
       }
     };
   }
@@ -31,16 +31,16 @@ class TriangleSynthPlayer extends Player {
   changeMeasure(index, noteIndex, chord, mixolydian) {
     let measure = this.sheet[index];
 
-    this.synth.playChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex], chord);
+    this.synth.playChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex].scientific(), chord);
 
     if (measure.volume) {
-      this.synth.turnVolume(this.levels.volumes[measure.volume.level], measure.volume.speed);
+      this.synth.turnVolume(this.levels.volumes[measure.volume.level], measure.volume.delay);
     }
     if (measure.filter) {
-      this.synth.setLowFilterFrequency(this.levels.filters[measure.filter.level] + (Math.random * 1000 - 500), measure.filter.speed);
+      this.synth.setFilterFrequency(this.levels.filters[measure.filter.level] + (Math.random() * 1000 - 500), measure.filter.delay);
     }
     if (measure.wahwah) {
-      this.synth.setWahWah(this.levels.wahwah[measure.wahwah.level], measure.wahwah.speed);
+      this.synth.setWahWah(this.levels.wahwah[measure.wahwah.level], measure.wahwah.delay);
     }
   }
 

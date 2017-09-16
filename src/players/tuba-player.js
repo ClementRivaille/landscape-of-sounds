@@ -10,9 +10,9 @@ class TubaPlayer extends Player {
 
     this.settings = {
       volumes: {
-        0: 0.5,
-        1: 1,
-        2: 1.5,
+        0: 0.1,
+        1: 0.15,
+        2: 0.2,
       },
       filters: {
         0: 300,
@@ -33,8 +33,9 @@ class TubaPlayer extends Player {
     }
 
     if (measure.active) {
+      let volume = measure.volume ? this.settings.volumes[measure.volume.level] : this.settings[0];
       this.interval = setInterval(() => {
-        this.tuba.play(this.settings.volumes[measure.volume.level], measure.pace);
+        this.tuba.play(volume, measure.pace);
       }, measure.delay + Math.random() * 0.4 * measure.delay - 0.2 * measure.delay);
     }
 

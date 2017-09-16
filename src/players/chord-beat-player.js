@@ -7,11 +7,13 @@ class ChordBeatPlayer extends Player {
     super(eventEmitter, sheet, tonic);
 
     this.chordbeat = new ChordBeat();
+    this.chordbeat.turnVolume(0, 100);
+    this.volume = 0;
 
     this.settings = {
       volumes: {
         0: 0,
-        1: 0.1,
+        1: 0.15,
         2: 0.2,
         3: 0.3
       },
@@ -50,7 +52,7 @@ class ChordBeatPlayer extends Player {
         }
       }
 
-      this.chordBeat.setNotes(notes[0], notes[1], notes[2]);
+      this.chordbeat.setNotes(notes[0], notes[1], notes[2]);
 
       if (!this.playing) {
         this.chordbeat.play();
@@ -64,15 +66,21 @@ class ChordBeatPlayer extends Player {
       this.playing = false;
     }
 
-    this.chordbeat.turnVolume(this.settings.volumes[measure.volume.level], measure.volume.delay);
-    this.volume = measure.volume.value;
+
+    if (measure.volume) {
+      this.chordbeat.turnVolume(this.settings.volumes[measure.volume.level], measure.volume.delay);
+      this.volume = measure.volume.level;
+    }
+    if (measure.pace) {
+      this.chordbeat.turnPace(measure.pace.value, measure.pace.delay);
+    }
 
     if (measure.filter) {
-      this.chordbeat.setFilterProperty('frequency', this.settings.filters[measure.filter.level] + (Math.random * 200 - 100), measure.filter.delay);
+      this.chordbeat.setFilterProperty('frequency', this.settings.filters[measure.filter.level] + (Math.random() * 200 - 100), measure.filter.delay);
     }
 
     if (measure.compressor) {
-      this.chordbeat.setCompressorProperty('threshold', this.settings.compressors[measure.compressor.level] + (Math.random * 10 - 5), measure.compressor.delay);
+      this.chordbeat.setCompressorProperty('threshold', this.settings.compressors[measure.compressor.level] + (Math.random() * 10 - 5), measure.compressor.delay);
     }
   }
 
@@ -87,6 +95,3 @@ class ChordBeatPlayer extends Player {
 
 
 export default ChordBeatPlayer;
-
-// chordBeat.setNotes(scaleNotes[2].scientific(), scaleNotes[4].scientific(), scaleNotes[1].interval('P8').scientific());
-//  chordBeat.playing ? chordBeat.stop() : chordBeat.play();

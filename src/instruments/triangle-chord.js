@@ -68,7 +68,7 @@ class TriangleChord {
   }
 
   setWahWah(amplitude, delay) {
-    this.soundConsole.sineWave.stopSine('wahwah');
+    this.soundConsole.stopSine('wahwah');
     this.soundConsole.sineWave(this.wahwahFilter, 'frequency', amplitude, delay, 'wahwah');
   }
 }

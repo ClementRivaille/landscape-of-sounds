@@ -40,6 +40,14 @@ class Violin {
         mix: 0.8
     });
     this.oscillator.addEffect(this.ringModulator);
+
+    this.reverb = new Pizzicato.Effects.Reverb({
+      time: 0.1,
+      decay: 0,
+      reverse: false,
+      mix: 0.8
+    });
+    this.oscillator.addEffect(this.reverb);
   }
 
   play(note) {
@@ -72,7 +80,7 @@ class Violin {
   }
 
   stopSineFilter(property) {
-    this.soundConsole.sineWave.stopSine('lowFilter-' + property);
+    this.soundConsole.stopSine('lowFilter-' + property);
   }
 }
 

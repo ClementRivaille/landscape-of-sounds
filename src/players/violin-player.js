@@ -51,7 +51,7 @@ class SynthPadPlayer extends Player {
     let measure = this.sheet[index];
 
     if (measure.filter) {
-      this.synth.setLowFilterFrequency(this.settings.filters[measure.filter.level] + (Math.random * 1000 - 500), measure.filter.speed);
+      this.violin.setLowFilterFrequency(this.settings.filters[measure.filter.level] + (Math.random() * 1000 - 500), measure.filter.speed);
     }
 
     if (measure.tremolo) {

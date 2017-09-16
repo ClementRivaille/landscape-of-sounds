@@ -8,14 +8,6 @@ class VibraphonePlayer extends Player {
     
     this.vibraphone = new Vibraphone();
     
-    this.settings = {
-      filters: {
-        0: 1,
-        0: 2,
-        1: 4,
-        3: 6
-      }
-    };
     this.mixolydianActive = false;
   }
 
@@ -23,21 +15,20 @@ class VibraphonePlayer extends Player {
     let measure = this.sheet[index];
 
     this.active = measure.active;
+    // delay before activations
     this.pace = measure.pace;
+    // delay between individual notes
     this.interval = measure.interval;
+    // Several note for each activation
     this.multiple = measure.multiple;
     this.mixolydianActive = mixolydian;
 
     if (measure.active && !this.playing) {
-      this.play(measure.multiple ? 1 + Math.floor(Math.random() * 2) : 1);
+      this.play(measure.multiple ? 1 + Math.round(Math.random() * 2) : 1);
       this.playing = true;
     }
     else if (!measure.active) {
       this.playing = false;
-    }
-
-    if (measure.filter) {
-      this.vibraphone.setHighFilterProperty('peak', this.settings.filters[measure.filter.level]);
     }
   }
 
@@ -57,7 +48,7 @@ class VibraphonePlayer extends Player {
     if (this.active) {
       let randomDelay = 0.2 * this.pace;
       setTimeout(() => {
-        this.play(this.multiple ? 1 + Math.floor(Math.random() * 2) : 1);
+        this.play(this.multiple ? 1 + Math.round(Math.random() * 2) : 1);
       }, this.pace + (Math.random() * 2 * randomDelay - (randomDelay / 2)));
     }
   }

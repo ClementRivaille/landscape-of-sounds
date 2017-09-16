@@ -17,11 +17,11 @@ class Vibraphone {
       frequency: 440,
       attack: 0.01,
       decay: 0.1,
-      volume: 0.1
+      volume: 0.07
     };
 
     this.highFilterOptions = {
-      frequency: 500,
+      frequency: 300 + (Math.random() * 1200),
       peak: 4.2
     };
 
@@ -64,6 +64,9 @@ class Vibraphone {
     sound.play();
     setTimeout(() => {
       sound.stop();
+      setTimeout(() => {
+        sound.disconnect();
+      }, 5000);
     }, 50)
   }
 

@@ -94,6 +94,9 @@ class Whistle {
     sound.play();
     setTimeout(() => {
       sound.stop();
+      setTimeout(() => {
+        sound.disconnect();
+      }, 5000)
     }, this.options.pace)
   }
 

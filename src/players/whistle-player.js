@@ -13,7 +13,7 @@ class WhistlePlayer extends Player {
       volumes: {
         0: 0,
         1: 0.2,
-        2: 0.3,
+        2: 0.25,
       }
     }
 
@@ -39,10 +39,12 @@ class WhistlePlayer extends Player {
       }, measure.delay + Math.random() * 0.4 * measure.delay - 0.2 * measure.delay);
     }
 
-    this.whistle.turnVolume(this.settings.volumes[measure.volume.level], measure.volume.delay);
+    if (measure.volume) {
+      this.whistle.turnVolume(this.settings.volumes[measure.volume.level], measure.volume.delay);
+    }
 
     if (measure.pace) {
-      this.whistle.turnPace(measure.pace.level, measure.pace.delay);
+      this.whistle.turnPace(measure.pace.value, measure.pace.delay);
     }
   }
 }
