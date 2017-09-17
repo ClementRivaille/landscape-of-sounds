@@ -78,7 +78,9 @@ class SynthPadPlayer extends Player {
 
       if (!this.state.active) {
         this.state.active = true;
-        this.playNotes(0);
+        setTimeout(() => {
+          this.playNotes(0);
+        }, measure.delay || 0);
       }
     }
     else {

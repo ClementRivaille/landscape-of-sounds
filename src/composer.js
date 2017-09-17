@@ -305,23 +305,23 @@ class Composer {
         {active: true, pace: 800, delay: 2500, volume: {level: 1}}, {}, {}, {} ],
       vibraphone: [ {}, {},
         // A
-        {}, {}, {active: true, pace: 6000, interval: 400}, {active: true, pace: 6000, interval: 400, multiple: true},
+        {}, {}, {active: true, pace: 6000, interval: 400, delay: 1400}, {active: true, pace: 6000, interval: 400, multiple: true, delay: 1571},
         // B
-        {}, {active: true, pace: 6000, interval: 400, multiple: true}, {active: true, pace: 6000, interval: 400, multiple: true}, {},
+        {}, {active: true, pace: 6000, interval: 400, multiple: true, delay: 1643}, {active: true, pace: 6000, interval: 400, multiple: true, delay: 1346}, {},
         // A
-        {active: true, pace: 4000, interval: 600, multiple: true}, {active: true, pace: 4000, interval: 500, multiple: true}, {}, {},
+        {active: true, pace: 4000, interval: 600, multiple: true, delay: 1348}, {active: true, pace: 4000, interval: 500, multiple: true, delay: 1649}, {}, {},
         // C
-        {}, {}, {}, {active: true, pace: 6000, interval: 400, multiple: true},
+        {}, {}, {}, {active: true, pace: 6000, interval: 400, multiple: true, delay: 1148},
         // A
-        {active: true, pace: 6000, interval: 400, multiple: true}, {}, {active: true, pace: 6000, interval: 400}, {} ],
+        {active: true, pace: 6000, interval: 400, multiple: true, delay: 1469}, {}, {active: true, pace: 6000, interval: 400, delay: 1264}, {} ],
 
       violon: [ {}, {},
         // A
-        {}, {}, {play: {pattern: 2, length: 2000, delay: 3500}, filter: {level: 0, speed: 4000}}, {play: {pattern: 2, length: 2000, delay: 3500}},
+        {}, {}, {play: {pattern: 2, length: 2000, delay: 3500}, filter: {level: 0, speed: 4000}, delay: 1411}, {play: {pattern: 2, length: 2000, delay: 3500}, delay: 1681},
         // B
-        {}, {play: {pattern: 0, length: 2000, delay: 3500}, filter: {level: 1, speed: 4000}}, {play: {pattern: 0, length: 2000, delay: 3500}}, {},
+        {}, {play: {pattern: 0, length: 2000, delay: 3500}, filter: {level: 1, speed: 4000}, delay: 812}, {play: {pattern: 0, length: 2000, delay: 3500}, delay: 1648}, {},
         // A
-        {play: {pattern: 4, length: 2000, delay: 3500}, filter: {level: 2, speed: 8000}, tremolo: {setting: 1}}, {play: {pattern: 4, length: 2000, delay: 3500}}, {}, {},
+        {play: {pattern: 4, length: 2000, delay: 3500}, filter: {level: 2, speed: 8000}, tremolo: {setting: 1}, delay: 1436}, {play: {pattern: 4, length: 2000, delay: 3500}, delay: 1854}, {}, {},
         // C
         {}, {}, {}, {},
         // A

@@ -24,7 +24,9 @@ class VibraphonePlayer extends Player {
     this.mixolydianActive = mixolydian;
 
     if (measure.active && !this.playing) {
-      this.play(measure.multiple ? 1 + Math.round(Math.random() * 2) : 1);
+      setTimeout(() => {
+        this.play(measure.multiple ? 1 + Math.round(Math.random() * 2) : 1);
+      }, measure.delay || 0);
       this.playing = true;
     }
     else if (!measure.active) {

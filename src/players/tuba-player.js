@@ -10,9 +10,9 @@ class TubaPlayer extends Player {
 
     this.settings = {
       volumes: {
-        0: 0.1,
-        1: 0.15,
-        2: 0.2,
+        0: 0,
+        1: 0.5,
+        2: 0.1,
       },
       filters: {
         0: 300,
