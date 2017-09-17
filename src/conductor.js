@@ -51,6 +51,9 @@ class Conductor {
     if (index + 1 < this.sheet.conductor.length) {
       setTimeout(() => this.playMeasure(index + 1), this.pace);
     }
+    else {
+      setTimeout(() => this.eventEmitter.emit('stop'), this.pace);
+    }
   }
 
 }

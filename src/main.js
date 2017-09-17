@@ -140,4 +140,5 @@ window.switchChord = function() {
 window.createConductor = function() {
   let conductor = new Conductor();
   conductor.playMeasure(0);
+  document.getElementById('playSong').disabled = true;
 }
