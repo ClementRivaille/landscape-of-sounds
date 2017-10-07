@@ -142,5 +142,15 @@ window.switchChord = function() {
 window.createConductor = function() {
   let conductor = new Conductor();
   conductor.playMeasure(0);
-  document.getElementById('playSong').disabled = true;
+  document.getElementById('intro').className += ' hidden';
+  document.getElementById('intro').setAttribute('aria-hidden', true);
+  document.getElementById('playing').className = '';
+  document.getElementById('playing').setAttribute('aria-hidden', false);
+}
+
+window.playInstruments = function() {
+  document.getElementById('intro').className += ' hidden';
+  document.getElementById('intro').setAttribute('aria-hidden', true);
+  document.getElementById('instruments').className = '';
+  document.getElementById('instruments').setAttribute('aria-hidden', false);
 }

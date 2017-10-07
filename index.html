@@ -2,48 +2,110 @@
 <html>
   <head>
     <script src="./bundle.js"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div style="float: right">
-        <button onclick="switchChord()">Change chord</button>
-        <button onclick="createConductor()" id="playSong">Play Song</button>
+    <header>
+        <h1>Landscape of Sounds</h1>
+
+        <p>
+            This is the current state of a project that I have put on hiatus. It aimed to create a procedural music, and dynamically play it. The goal was to create an unique and ephemeral experience. Unfortunately, some technical issues with the audio refused to be solved. Fixing them might requires a complete refactoring of the project. Since I wanted to move on and explore some other ideas, I stopped its development here. Maybe I'll get back to it in the future, but for now, here is what it can do!
+        </p>
+    </header>
+
+    <div id="intro">
+        The music composed by Landscape of Sounds is played by virtual instruments, all made of oscillators. This demo page offers two modes: either play with the instruments, or listen to them as they play a song together.
+        <div id="menu">
+            <button onclick="playInstruments()">Play with instruments</button>
+            <button onclick="createConductor()" id="playSong">Listen to song</button>
+        </div>
     </div>
 
-    <h2>Bass</h2>
-    <div><button onclick="playA4()">Piano Bass</button></div>
-    <br/>
-    <h2>Sine Synth</h2>
-    <div><button onclick="turnSynthOn()">Synth (on)</button></div>
-    <div><button onclick="turnSynthOff()">Synth (off)</button></div>
-    <div><button onclick="changeSynthFrequency()">Random Frequency</button></div>
-    <br/>
-    <h2>Bells</h2>
-    <button onclick="playBells()">Ring</button>
-    <br/>
+    <div id="instruments" class="hidden" aria-hidden="true">
+        <h2>Instruments</h2>
+        <p>
+            This page was used to test the different instruments. Instruments are all oscillators created with the Pizzicato library, with a bunch of effects and behavior associated to each one.<br/>
+            Not all of their functions are shown here, but you can get an idea of what they do and how they work.<br/>
+            By default they are all playing on A major 7. But you can switch to C&#9839; minor and back with this button:&nbsp;<button onclick="switchChord()">Switch chord</button>
+        </p>
 
-    <h2>Violin</h2>
-    <div><button onclick="playViolin()">Activate Violin</button></div>
-    <div><button onclick="waveViolinFreq()">Frequency</button></div>
-    
-    <h2>Harp</h2>
-    <div><button onclick="playSquareHarp()">Play</button></div>
-    <div><button onclick="switchHarpPace()">Pace</button></div>
+        <div id="instruments-grid">
+            <div class="instrument">
+                <h2>Bass</h2>
+                <div><button onclick="playA4()">Piano Bass</button></div>
+            </div>
 
-    <h2>Vibraphone</h2>
-    <div><button onclick="playVibraphone()">Play</button></div>
+            <div class="instrument">
+                <h2>Sine Synth</h2>
+                <div><button onclick="turnSynthOn()">Synth (on)</button></div>
+                <div><button onclick="turnSynthOff()">Synth (off)</button></div>
+                <div><button onclick="changeSynthFrequency()">Random Frequency</button></div>                
+            </div>
 
-    <h2>Clavecin</h2>
-    <div><button onclick="playChordBeat()">Play</button></div>
-    <!-- <div><button onclick="switchHarpPace()">Pace</button></div> -->
+            <div class="instrument">
+                <h2>Bells</h2>
+                <button onclick="playBells()">Ring</button>
+            </div>
 
-    <h2>Triangle Synth</h2>
-    <div><button onclick="switchTriangle()">Play</button></div>
-    <div><button onclick="changeTriangleFrequency()">Random frequency</button></div>
+            <div class="instrument">
+                <h2>Violin</h2>
+                <div><button onclick="playViolin()">Activate Violin</button></div>
+                <div><button onclick="waveViolinFreq()">Frequency</button></div>
+            </div>
+                
+            <div class="instrument">
+                <h2>Harp</h2>
+                <div><button onclick="playSquareHarp()">Play</button></div>
+                <div><button onclick="switchHarpPace()">Pace</button></div>
+            </div>
 
-    <h2>Tuba</h2>
-    <div><button onclick="switchWaveBass()">Activate</button></div>
 
-    <h2>Whistle</h2>
-    <div><button onclick="playWhistle()">Play</button></div>
+            <div class="instrument">
+                <h2>Vibraphone</h2>
+                <div><button onclick="playVibraphone()">Play</button></div>
+            </div>
+
+            <div class="instrument">
+                <h2>Clavecin</h2>
+                <div><button onclick="playChordBeat()">Play</button></div>
+                <!-- <div><button onclick="switchHarpPace()">Pace</button></div> -->
+            </div>
+
+            <div class="instrument">
+                <h2>Triangle Synth</h2>
+                <div><button onclick="switchTriangle()">Play</button></div>
+                <div><button onclick="changeTriangleFrequency()">Random frequency</button></div>
+            </div>
+
+            <div class="instrument">
+                <h2>Tuba</h2>
+                <div><button onclick="switchWaveBass()">Activate</button></div>
+            </div>
+
+            <div class="instrument">
+                <h2>Whistle</h2>
+                <div><button onclick="playWhistle()">Play</button></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="playing" class="hidden" aria-hidden="true">
+        <h2>
+            What is happening?
+        </h2>
+
+        <p>
+            You're currently listening a virtual orchestra playing a procedurally generated song. Well, it's not completely generated yet. They are following a sheet hard-written for testing. However, there are still some random elements that make it unique each time you refresh the page. Changes happen mostly in rhythms and sounds. Some instruments even improvise their own melody! Here is how it works:
+        </p>
+        <p>
+            <em>Warning: At some point, the audio will start to glitch. It can then increase, until eventually it becomes inaudible. There is no way to stop it ("science got mad!"), so you might have to cut the audio on the tab if it is getting unbearable. My best guess is that it has something to do with memory and garbage collector. If you have a suggestion or are familiar with the Web Audio API or Pizzicato, I would welcome all kind of help!</em>
+        </p>
+        <ul>
+            <li>The <strong>Composer</strong> write a sheet, describing the tonic of the song, and its structure. This sheet is hard-written for now. It indicates which chord is used at each measure, and when instruments should start, stop, or apply some effects. The song uses mostly the Ionian mode, except in the last "climax" section where it ventures into the Mixolydian mode.</li>
+            <li>The <strong>Conductor</strong> distributes the sheet to musician. It then counts measures, giving the "rhythm" of the music. Each new measure, it tells musicians what chord to play, and where to look in their sheet.</li>
+            <li><strong>Players</strong> are the actors who manipulate instruments. They are following the conductor and their sheet, but also have each their own behavior. Some just play a chord, some will improvise a bit&hellip; They have knowledge of music theory, and know exactly how to use the specific instrument they are specialized in.
+            <li>Finally, <strong>Instruments</strong> make the sounds they are asked to do, without questionning orders. Some play a note, other a chords, some even make arpeggios! You can explore them in the other mode of this page.</li>
+        </ul>
+    </div>
   </body>
 </html>
