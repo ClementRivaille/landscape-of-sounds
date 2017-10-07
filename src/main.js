@@ -12,6 +12,7 @@ import Whistle from './instruments/whistle';
 import Conductor from './conductor';
 
 import teoria from 'teoria';
+import Pizzicato from 'pizzicato';
 window.teoria = teoria;
 let scaleNotes = teoria.scale('a4', 'major').notes();
 
@@ -47,6 +48,7 @@ let shift = false
 let someNotes = ['a4', 'c#4', 'e4', 'g#4', 'b4'];
 let index = 0;
 
+Pizzicato.volume = 0.3;
 window.playA4 = function() {
   bassPiano.play(shift ? 'c#3' : 'a2', true);
 }

@@ -45,7 +45,7 @@ class Composer {
         // B
         {
           toneIndex: 1,  // 3  // 5
-          chord: tones[1],
+          chord: tones[1] + '7',
           mixolydian: false
         },
         {
@@ -66,7 +66,7 @@ class Composer {
         // A
         {
           toneIndex: 0,
-          chord: tones[0],
+          chord: tones[0] + '7',
           mixolydian: false
         },
         {
@@ -76,7 +76,7 @@ class Composer {
         },
         {
           toneIndex: 0,
-          chord: tones[0],
+          chord: tones[0] + '7',
           mixolydian: false
         },
         {
@@ -113,7 +113,7 @@ class Composer {
         },
         {
           toneIndex: 3, // 5 // 2
-          chord: tones[3],
+          chord: tones[3] + '7',
           mixolydian: false
         },
         {
