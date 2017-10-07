@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,10 +73,10 @@
 "use strict";
 
 
-var Note = __webpack_require__(7);
-var Interval = __webpack_require__(4);
-var Chord = __webpack_require__(24);
-var Scale = __webpack_require__(25);
+var Note = __webpack_require__(18);
+var Interval = __webpack_require__(5);
+var Chord = __webpack_require__(26);
+var Scale = __webpack_require__(27);
 
 var teoria;
 
@@ -141,7 +141,7 @@ teoria = {
   Interval: Interval
 };
 
-__webpack_require__(26)(teoria);
+__webpack_require__(28)(teoria);
 exports = module.exports = teoria;
 
 /***/ }),
@@ -175,7 +175,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }var o = {},
       s = o,
       a = "object" == ( false ? "undefined" : _typeof(module)) && module.exports,
-      r = "function" == "function" && __webpack_require__(30);a ? module.exports = o : r ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (o),
+      r = "function" == "function" && __webpack_require__(44);a ? module.exports = o : r ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (o),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : e.Pizzicato = e.Pz = o;var c = e.AudioContext || e.webkitAudioContext;if (!c) return void console.error("No AudioContext found in this environment. Please ensure your window or global object contains a working AudioContext constructor function.");o.context = new c();var h = o.context.createGain();h.connect(o.context.destination), o.Util = { isString: function isString(e) {
@@ -622,7 +622,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         s.Util.isInRange(e, 0, 1) && (this.options.highGain = e, this.overdrives[3].curve = n(s.Util.normalize(this.highGain, 0, 150)));
       } } }), o;
 }("undefined" != typeof window ? window : global);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27), __webpack_require__(28)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29), __webpack_require__(30)(module)))
 
 /***/ }),
 /* 2 */
@@ -663,7 +663,7 @@ var SoundConsole = function () {
       // Clear eventual conflictual interval
       if (this.intervals[key]) {
         clearInterval(this.intervals[key].interval);
-        this.intervals[key].reject();
+        this.intervals[key].resolve();
         delete this.intervals[key];
       }
 
@@ -730,6 +730,55 @@ exports.default = SoundConsole;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Player = function () {
+  function Player(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, Player);
+
+    this.eventEmitter = eventEmitter;
+    this.sheet = sheet;
+    this.color = _teoria2.default.scale(tonic, 'major');
+    this.mixolydian = _teoria2.default.scale(tonic, 'mixolydian');
+
+    this.changeMeasure = this.changeMeasure.bind(this);
+    this.stop = this.stop.bind(this);
+    this.eventEmitter.subscribe('changeMeasure', this.changeMeasure);
+    this.eventEmitter.subscribe('stop', this.stop);
+  }
+
+  _createClass(Player, [{
+    key: 'stop',
+    value: function stop() {
+      this.eventEmitter.unsubscribe('changeMeasure', this.changeMeasure);
+      this.eventEmitter.unsubscribe('stop', this.stop);
+    }
+  }]);
+
+  return Player;
+}();
+
+exports.default = Player;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -895,15 +944,15 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var knowledge = __webpack_require__(3);
-var vector = __webpack_require__(8);
-var toCoord = __webpack_require__(21);
+var knowledge = __webpack_require__(4);
+var vector = __webpack_require__(19);
+var toCoord = __webpack_require__(23);
 
 function Interval(coord) {
   if (!(this instanceof Interval)) return new Interval(coord);
@@ -1063,7 +1112,1301 @@ Interval.invert = function (sInterval) {
 module.exports = Interval;
 
 /***/ }),
-/* 5 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var BassPiano = function () {
+  function BassPiano() {
+    _classCallCheck(this, BassPiano);
+
+    this.soundConsole = new _soundConsole2.default();
+    this.playing = [];
+    this.buildOscillator();
+    this.decay = 15000;
+  }
+
+  _createClass(BassPiano, [{
+    key: 'buildOscillator',
+    value: function buildOscillator() {
+      this.wave1 = new _pizzicato2.default.Sound({
+        source: 'wave',
+        options: {
+          type: 'sine',
+          frequency: 440,
+          attack: 0.07
+        }
+      });
+      this.wave2 = new _pizzicato2.default.Sound({
+        source: 'wave',
+        options: {
+          type: 'sine',
+          frequency: 440,
+          attack: 0.07
+        }
+      });
+      this.oscillator = new _pizzicato2.default.Group([this.wave1, this.wave2]);
+
+      var ringModulator = new _pizzicato2.default.Effects.RingModulator({
+        speed: 0.1,
+        distortion: 0.06,
+        mix: 0.6
+      });
+      this.oscillator.addEffect(ringModulator);
+
+      var lowFilter = new _pizzicato2.default.Effects.LowPassFilter({
+        frequency: 1000,
+        peak: 1
+      });
+      this.oscillator.addEffect(lowFilter);
+
+      // const reverb = new Pizzicato.Effects.Reverb({
+      //   time: 0.5,
+      //   decay: 1,
+      //   reverse: false,
+      //   mix: 0.5
+      // });
+      // this.oscillator.addEffect(reverb);
+
+
+      this.oscillator.volume = 0.1;
+    }
+  }, {
+    key: 'play',
+    value: function play(note, stop) {
+      var _this = this;
+
+      if (stop) {
+        while (this.playing.length > 0) {
+          var oscillator = this.playing.pop();
+          oscillator.stop();
+          oscillator.disconnect();
+        }
+      }
+
+      this.wave1.frequency = _teoria2.default.note(note).fq();
+      this.wave2.frequency = _teoria2.default.note(note).interval('P-8').fq();
+
+      this.oscillator.play();
+      setTimeout(function () {
+        _this.oscillator.stop();
+      }, 100);
+
+      this.playing.push(this.oscillator);
+      this.startDecay(this.oscillator, this.playing.length - 1);
+
+      this.buildOscillator();
+    }
+  }, {
+    key: 'startDecay',
+    value: function startDecay(oscillator, index) {
+      var _this2 = this;
+
+      this.soundConsole.progressiveChange(oscillator, 'volume', 0, 'bassDecay', this.decay).then(function () {
+        ;
+        // Stop oscillator once done
+        oscillator.stop();
+        oscillator.disconnect();
+        if (_this2.playing[index] === oscillator) _this2.playing.splice(index, 1);
+      });
+    }
+  }]);
+
+  return BassPiano;
+}();
+
+exports.default = BassPiano;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function makeSound() {
+  return new _pizzicato2.default.Sound({
+    source: 'wave',
+    options: {
+      type: 'sawtooth',
+      frequency: 440,
+      attack: 0.01,
+      release: 0.2
+    }
+  });
+}
+
+var ChordBeat = function () {
+  function ChordBeat() {
+    _classCallCheck(this, ChordBeat);
+
+    this.soundConsole = new _soundConsole2.default();
+
+    this.options = {
+      pace: 500
+    };
+
+    this.buildSynth();
+    this.playing = false;
+  }
+
+  _createClass(ChordBeat, [{
+    key: 'buildSynth',
+    value: function buildSynth() {
+      this.first = makeSound(this.options.volume);
+      this.second = makeSound(this.options.volume);
+      this.third = makeSound(this.options.volume);
+
+      this.oscillator = new _pizzicato2.default.Group([this.first, this.second, this.third]);
+      this.oscillator.volume = 0.3;
+
+      this.filter = new _pizzicato2.default.Effects.HighPassFilter({
+        frequency: 600,
+        peak: 2.5
+      });
+      this.oscillator.addEffect(this.filter);
+
+      this.compressor = new _pizzicato2.default.Effects.Compressor({
+        threshold: -20,
+        // knee: 32,
+        ratio: 60
+      });
+      this.oscillator.addEffect(this.compressor);
+
+      this.reverb = new _pizzicato2.default.Effects.Reverb({
+        time: 1.3,
+        decay: 1,
+        reverse: false,
+        mix: 0.8
+      });
+      this.oscillator.addEffect(this.reverb);
+
+      this.flanger = new _pizzicato2.default.Effects.Flanger({
+        time: 0.5,
+        speed: 0.4,
+        depth: 0.2,
+        feedback: 0.2,
+        mix: 0.4
+      });
+      this.oscillator.addEffect(this.flanger);
+    }
+  }, {
+    key: 'turnVolume',
+    value: function turnVolume(volume) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.oscillator, 'volume', volume, 'volume', delay);
+    }
+  }, {
+    key: 'turnPace',
+    value: function turnPace(pace) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.options, 'pace', pace, 'harpegePace', delay);
+    }
+  }, {
+    key: 'setNotes',
+    value: function setNotes(note1, note2, note3) {
+      this.first.frequency = _teoria2.default.note(note1).fq();
+      this.second.frequency = _teoria2.default.note(note2).fq();
+      this.third.frequency = _teoria2.default.note(note3).fq();
+    }
+  }, {
+    key: 'play',
+    value: function play() {
+      if (!this.playing) {
+        this.playing = true;
+        this.playChord();
+      }
+    }
+  }, {
+    key: 'playChord',
+    value: function playChord() {
+      var _this = this;
+
+      if (this.playing) {
+        this.playSound();
+
+        setTimeout(function () {
+          _this.playChord();
+        }, this.options.pace);
+      }
+    }
+  }, {
+    key: 'playSound',
+    value: function playSound() {
+      var _this2 = this;
+
+      this.oscillator.play();
+      setTimeout(function () {
+        _this2.oscillator.stop();
+      }, 50);
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      this.playing = false;
+    }
+  }, {
+    key: 'setFilterProperty',
+    value: function setFilterProperty(property, value) {
+      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
+
+      this.soundConsole.progressiveChange(this.filter, property, value, 'filter-' + property, delay);
+    }
+  }, {
+    key: 'setCompressorProperty',
+    value: function setCompressorProperty(property, value) {
+      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
+
+      this.soundConsole.progressiveChange(this.compressor, property, value, 'compressor-' + property, delay);
+    }
+  }]);
+
+  return ChordBeat;
+}();
+
+exports.default = ChordBeat;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LightBells = function () {
+  function LightBells() {
+    _classCallCheck(this, LightBells);
+
+    this.soundConsole = new _soundConsole2.default();
+  }
+
+  _createClass(LightBells, [{
+    key: 'ring',
+    value: function ring(base, scale) {
+      var _this = this;
+
+      var color = _teoria2.default.note(base).scale(scale);
+      var notes = [color.get(1), color.get(2), color.get(3), color.get(5), color.get(6)];
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var note = _step.value;
+
+          var bell = _this.createBell(note.interval('P8').fq());
+          setTimeout(function () {
+            bell.play();
+            _this.soundConsole.progressiveChange(bell, 'volume', 0, 'bell' + Math.random() * 10, 2000).then(function () {
+              bell.disconnect();
+            });
+          }, Math.random() * 1500);
+        };
+
+        for (var _iterator = notes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }
+  }, {
+    key: 'createBell',
+    value: function createBell(frequency) {
+      var bell = new _pizzicato2.default.Sound({
+        source: 'wave',
+        options: {
+          type: 'triangle',
+          frequency: frequency,
+          attack: 0.01,
+          volume: 0.1
+        }
+      });
+
+      bell.addEffect(new _pizzicato2.default.Effects.HighPassFilter({
+        frequency: 2000,
+        peak: 1
+      }));
+
+      return bell;
+    }
+  }]);
+
+  return LightBells;
+}();
+
+exports.default = LightBells;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function makeSound(volume) {
+  return new _pizzicato2.default.Sound({
+    source: 'wave',
+    options: {
+      type: 'square',
+      frequency: 440,
+      attack: 0.01,
+      volume: volume
+    }
+  });
+}
+
+var SquareHarp = function () {
+  function SquareHarp() {
+    _classCallCheck(this, SquareHarp);
+
+    this.soundConsole = new _soundConsole2.default();
+
+    this.options = {
+      volume: 0.02,
+      pace: 100
+    };
+
+    this.buildSynth();
+    this.playing = false;
+  }
+
+  _createClass(SquareHarp, [{
+    key: 'buildSynth',
+    value: function buildSynth() {
+      this.base = makeSound(this.options.volume);
+      this.third = makeSound(this.options.volume);
+      this.fifth = makeSound(this.options.volume);
+      this.last = makeSound(this.options.volume);
+
+      this.lowFilter = new _pizzicato2.default.Effects.LowPassFilter({
+        frequency: 2000,
+        peak: 4
+      });
+      this.applyEffect(this.lowFilter);
+
+      this.reverb = new _pizzicato2.default.Effects.Reverb({
+        time: 1,
+        decay: 1,
+        reverse: false,
+        mix: 0.8
+      });
+      this.applyEffect(this.reverb);
+    }
+  }, {
+    key: 'applyEffect',
+    value: function applyEffect(effect) {
+      this.base.addEffect(effect);
+      this.third.addEffect(effect);
+      this.fifth.addEffect(effect);
+      this.last.addEffect(effect);
+    }
+  }, {
+    key: 'turnVolume',
+    value: function turnVolume(volume) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.base, 'volume', volume, 'baseVolume', delay);
+      this.soundConsole.progressiveChange(this.third, 'volume', volume, 'thirdVolume', delay);
+      this.soundConsole.progressiveChange(this.fifth, 'volume', volume, 'fifthVolume', delay);
+      this.soundConsole.progressiveChange(this.last, 'volume', volume, 'lastVolume', delay);
+    }
+  }, {
+    key: 'turnPace',
+    value: function turnPace(pace) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      return this.soundConsole.progressiveChange(this.options, 'pace', pace, 'harpegePace', delay);
+    }
+  }, {
+    key: 'setChord',
+    value: function setChord(base, chord) {
+      var notes = _teoria2.default.note(base).chord(chord).notes();
+
+      this.base.frequency = notes[0].fq();
+      this.third.frequency = notes[1].fq();
+      this.fifth.frequency = notes[2].fq();
+      this.last.frequency = notes.length > 3 ? notes[3].fq() : notes[0].interval('P8').fq();
+    }
+  }, {
+    key: 'play',
+    value: function play() {
+      if (!this.playing) {
+        this.playing = true;
+        this.playHarpege(0, [this.last, this.fifth, this.third, this.base]);
+      }
+    }
+  }, {
+    key: 'playHarpege',
+    value: function playHarpege(index, notes) {
+      var _this = this;
+
+      if (this.playing) {
+        this.playNote(notes[index]);
+
+        var next = (index + 1) % notes.length;
+        setTimeout(function () {
+          _this.playHarpege(next, notes);
+        }, this.options.pace);
+      }
+    }
+  }, {
+    key: 'playNote',
+    value: function playNote(sound) {
+      sound.play();
+      setTimeout(function () {
+        sound.stop();
+      }, 50);
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      this.playing = false;
+    }
+  }, {
+    key: 'setLowFilterProperty',
+    value: function setLowFilterProperty(property, value) {
+      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
+
+      this.soundConsole.progressiveChange(this.lowFilter, property, value, 'lowFilter-' + property, delay);
+    }
+  }, {
+    key: 'setReverbProperty',
+    value: function setReverbProperty(property, value) {
+      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
+
+      this.soundConsole.progressiveChange(this.reverb, property, value, 'reverb-' + property, delay);
+    }
+  }]);
+
+  return SquareHarp;
+}();
+
+exports.default = SquareHarp;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function makeSound() {
+  return new _pizzicato2.default.Sound({
+    source: 'wave',
+    options: {
+      type: 'sawtooth',
+      frequency: 440,
+      attack: 0
+    }
+  });
+}
+
+var SynthPad = function () {
+  function SynthPad() {
+    _classCallCheck(this, SynthPad);
+
+    this.soundConsole = new _soundConsole2.default();
+
+    this.buildSynth();
+    this.synth.play();
+  }
+
+  _createClass(SynthPad, [{
+    key: 'buildSynth',
+    value: function buildSynth() {
+      this.base = makeSound();
+      this.third = makeSound();
+      this.fifth = makeSound();
+      this.last = makeSound();
+
+      this.synth = new _pizzicato2.default.Group([this.base, this.third, this.fifth, this.last]);
+      this.synth.volume = 0;
+
+      this.lowFilter = new _pizzicato2.default.Effects.LowPassFilter({
+        frequency: 500,
+        peak: 0.1
+      });
+      this.synth.addEffect(this.lowFilter);
+    }
+  }, {
+    key: 'turnVolume',
+    value: function turnVolume(volume) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.synth, 'volume', volume, 'synthVolume', delay);
+    }
+  }, {
+    key: 'playChord',
+    value: function playChord(base, chord) {
+      var notes = _teoria2.default.note(base).chord(chord).notes();
+
+      this.base.frequency = notes[0].fq();
+      this.third.frequency = notes[1].fq();
+      this.fifth.frequency = notes[2].fq();
+      this.last.frequency = notes.length > 3 ? notes[3].fq() : notes[0].interval('P8').fq();
+    }
+  }, {
+    key: 'setLowFilterFrequency',
+    value: function setLowFilterFrequency(frequency) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.lowFilter, 'frequency', frequency, 'lowFilterFreq', delay);
+    }
+  }]);
+
+  return SynthPad;
+}();
+
+exports.default = SynthPad;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function makeSound() {
+  return new _pizzicato2.default.Sound({
+    source: 'wave',
+    options: {
+      type: 'triangle',
+      frequency: 440,
+      attack: 0
+    }
+  });
+}
+
+var TriangleChord = function () {
+  function TriangleChord() {
+    _classCallCheck(this, TriangleChord);
+
+    this.soundConsole = new _soundConsole2.default();
+
+    this.buildSynth();
+    this.synth.play();
+  }
+
+  _createClass(TriangleChord, [{
+    key: 'buildSynth',
+    value: function buildSynth() {
+      this.third = makeSound();
+      this.fifth = makeSound();
+      this.last = makeSound();
+
+      this.synth = new _pizzicato2.default.Group([this.third, this.fifth, this.last]);
+      this.synth.volume = 0;
+
+      this.filter = new _pizzicato2.default.Effects.HighPassFilter({
+        frequency: 2000,
+        peak: 4
+      });
+      this.synth.addEffect(this.filter);
+
+      this.wahwahFilter = new _pizzicato2.default.Effects.LowPassFilter({
+        frequency: 3000,
+        peak: 1,
+        mix: 0.1
+      });
+      this.synth.addEffect(this.wahwahFilter);
+      this.soundConsole.sineWave(this.wahwahFilter, 'frequency', 1000, 5000, 'wahwah');
+
+      this.tremolo = new _pizzicato2.default.Effects.Tremolo({
+        speed: 1,
+        depth: 0.5,
+        mix: 0.6
+      });
+    }
+  }, {
+    key: 'turnVolume',
+    value: function turnVolume(volume) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.synth, 'volume', volume, 'synthVolume', delay);
+    }
+  }, {
+    key: 'playChord',
+    value: function playChord(base, chord) {
+      var notes = _teoria2.default.note(base).chord(chord).notes();
+
+      this.third.frequency = notes[1].fq();
+      this.fifth.frequency = notes[2].fq();
+      this.last.frequency = notes.length > 3 ? notes[3].fq() : notes[0].interval('P8').fq();
+    }
+  }, {
+    key: 'setFilterFrequency',
+    value: function setFilterFrequency(frequency) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.filter, 'frequency', frequency, 'filterFreq', delay);
+    }
+  }, {
+    key: 'setWahWah',
+    value: function setWahWah(amplitude, delay) {
+      this.soundConsole.stopSine('wahwah');
+      this.soundConsole.sineWave(this.wahwahFilter, 'frequency', amplitude, delay, 'wahwah');
+    }
+  }]);
+
+  return TriangleChord;
+}();
+
+exports.default = TriangleChord;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function makeSound() {
+  return new _pizzicato2.default.Sound({
+    source: 'wave',
+    options: {
+      type: 'square',
+      frequency: 440,
+      attack: 0,
+      volume: 1
+    }
+  });
+}
+
+var Tuba = function () {
+  function Tuba() {
+    _classCallCheck(this, Tuba);
+
+    this.soundConsole = new _soundConsole2.default();
+
+    this.buildSynth();
+    this.synth.play();
+  }
+
+  _createClass(Tuba, [{
+    key: 'buildSynth',
+    value: function buildSynth() {
+      this.sound1 = makeSound();
+      this.sound2 = makeSound();
+
+      this.synth = new _pizzicato2.default.Group([this.sound1, this.sound2]);
+      this.synth.volume = 0;
+
+      this.gainNode = _pizzicato2.default.context.createGain();
+      this.gainNode.gain.value = -50;
+      this.synth.connect(this.gainNode);
+
+      this.filter = new _pizzicato2.default.Effects.LowPassFilter({
+        frequency: 500,
+        peak: 0.5,
+        mix: 1
+      });
+      this.synth.addEffect(this.filter);
+
+      var ringModulator = new _pizzicato2.default.Effects.RingModulator({
+        speed: 0.1,
+        distortion: 0.06,
+        mix: 0.6
+      });
+      this.synth.addEffect(ringModulator);
+    }
+  }, {
+    key: 'play',
+    value: function play() {
+      var _this = this;
+
+      var volume = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.1;
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
+
+      this.soundConsole.progressiveChange(this.synth, 'volume', volume, 'volumeUp', delay).then(function () {
+        _this.soundConsole.progressiveChange(_this.synth, 'volume', 0, 'volumeDown', delay);
+      });
+    }
+  }, {
+    key: 'setNote',
+    value: function setNote(note) {
+      this.sound1.frequency = _teoria2.default.note(note).fq();
+      this.sound2.frequency = _teoria2.default.note(note).interval('P-8').fq();
+    }
+  }, {
+    key: 'setFilterFrequency',
+    value: function setFilterFrequency(frequency) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.filter, 'frequency', frequency, 'filterFreq', delay);
+    }
+  }]);
+
+  return Tuba;
+}();
+
+exports.default = Tuba;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Vibraphone = function () {
+  function Vibraphone() {
+    _classCallCheck(this, Vibraphone);
+
+    this.soundConsole = new _soundConsole2.default();
+
+    this.buildSynth();
+  }
+
+  _createClass(Vibraphone, [{
+    key: 'buildSynth',
+    value: function buildSynth() {
+      this.soundOptions = {
+        type: 'sine',
+        frequency: 440,
+        attack: 0.01,
+        decay: 0.1,
+        volume: 0.07
+      };
+
+      this.highFilterOptions = {
+        frequency: 300 + Math.random() * 1200,
+        peak: 4.2
+      };
+
+      this.delayOptions = {
+        feedback: 0.7,
+        time: 0.1,
+        mix: 0.8
+      };
+
+      this.reverbOptions = {
+        time: 1,
+        decay: 1,
+        reverse: false,
+        mix: 0.8
+      };
+    }
+  }, {
+    key: 'makeSound',
+    value: function makeSound(note) {
+      var sound = new _pizzicato2.default.Sound({
+        source: 'wave',
+        options: this.soundOptions
+      });
+      sound.frequency = _teoria2.default.note(note).fq();
+      var octave = new _pizzicato2.default.Sound({
+        source: 'wave',
+        options: this.soundOptions
+      });
+      octave.frequency = _teoria2.default.note(note).interval('P8').fq();
+      var oscillator = new _pizzicato2.default.Group([sound, octave]);
+      oscillator.addEffect(new _pizzicato2.default.Effects.HighPassFilter(this.highFilterOptions));
+      oscillator.addEffect(new _pizzicato2.default.Effects.Delay(this.delayOptions));
+      // sound.addEffect(new Pizzicato.Effects.Reverb(this.reverbOptions));
+
+      return oscillator;
+    }
+  }, {
+    key: 'play',
+    value: function play(note) {
+      var sound = this.makeSound(note);
+
+      sound.play();
+      setTimeout(function () {
+        sound.stop();
+        setTimeout(function () {
+          sound.disconnect();
+        }, 5000);
+      }, 50);
+    }
+  }, {
+    key: 'setHighFilterProperty',
+    value: function setHighFilterProperty(property, value) {
+      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
+
+      this.soundConsole.progressiveChange(this.highFilterOptions, property, value, 'highFilter-' + property, delay);
+    }
+  }]);
+
+  return Vibraphone;
+}();
+
+exports.default = Vibraphone;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function makeSound() {
+  return new _pizzicato2.default.Sound({
+    source: 'wave',
+    options: {
+      type: 'sawtooth',
+      frequency: 440,
+      attack: 1,
+      release: 1,
+      volume: 0.5
+    }
+  });
+}
+
+var Violin = function () {
+  function Violin() {
+    _classCallCheck(this, Violin);
+
+    this.soundConsole = new _soundConsole2.default();
+
+    this.buildSynth();
+
+    this._playing = false;
+  }
+
+  _createClass(Violin, [{
+    key: 'buildSynth',
+    value: function buildSynth() {
+      this.oscillator = makeSound();
+
+      this.lowFilter = new _pizzicato2.default.Effects.LowPassFilter({
+        frequency: 1500,
+        peak: 2
+      });
+      this.oscillator.addEffect(this.lowFilter);
+
+      this.ringModulator = new _pizzicato2.default.Effects.RingModulator({
+        speed: 0.1,
+        distortion: 0.1,
+        mix: 0.8
+      });
+      this.oscillator.addEffect(this.ringModulator);
+
+      this.reverb = new _pizzicato2.default.Effects.Reverb({
+        time: 0.1,
+        decay: 0,
+        reverse: false,
+        mix: 0.8
+      });
+      this.oscillator.addEffect(this.reverb);
+    }
+  }, {
+    key: 'play',
+    value: function play(note) {
+      if (!this._playing) {
+        this.oscillator.frequency = _teoria2.default.note(note).fq();
+        this.oscillator.volume = 0.1;
+        this.oscillator.play();
+        this._playing = true;
+      } else {
+        this.stop();
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      var _this = this;
+
+      if (this._playing) {
+        this.soundConsole.progressiveChange(this.oscillator, 'volume', 0, 'violinDecay', 1000).then(function () {
+          _this.oscillator.stop();
+          _this._playing = false;
+        });
+      }
+    }
+  }, {
+    key: 'setLowFilterFrequency',
+    value: function setLowFilterFrequency(frequency) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.lowFilter, 'frequency', frequency, 'lowFilterFreq', delay);
+    }
+  }, {
+    key: 'sineFilter',
+    value: function sineFilter(property, amplitude, delay) {
+      this.soundConsole.sineWave(this.lowFilter, property, amplitude, delay, 'lowFilter-' + property);
+    }
+  }, {
+    key: 'stopSineFilter',
+    value: function stopSineFilter(property) {
+      this.soundConsole.stopSine('lowFilter-' + property);
+    }
+  }]);
+
+  return Violin;
+}();
+
+exports.default = Violin;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
+
+var _teoria = __webpack_require__(0);
+
+var _teoria2 = _interopRequireDefault(_teoria);
+
+var _soundConsole = __webpack_require__(2);
+
+var _soundConsole2 = _interopRequireDefault(_soundConsole);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Whistle = function () {
+  function Whistle() {
+    _classCallCheck(this, Whistle);
+
+    this.soundConsole = new _soundConsole2.default();
+
+    this.options = {
+      volume: 0.2,
+      pace: 300
+    };
+
+    this.buildSynth();
+
+    this.playingSounds = [];
+  }
+
+  _createClass(Whistle, [{
+    key: 'makeSound',
+    value: function makeSound() {
+      var sound = new _pizzicato2.default.Sound({
+        source: 'wave',
+        options: this.soundOptions
+      });
+
+      sound.addEffect(new _pizzicato2.default.Effects.LowPassFilter(this.lowFilter));
+      // sound.addEffect(new Pizzicato.Effects.Reverb(this.reverb));
+      sound.addEffect(new _pizzicato2.default.Effects.Delay(this.delay));
+
+      return sound;
+    }
+  }, {
+    key: 'buildSynth',
+    value: function buildSynth() {
+      this.soundOptions = {
+        type: 'triangle',
+        frequency: 440,
+        attack: 0.3,
+        release: 0.1,
+        volume: this.options.volume
+      };
+
+      this.lowFilter = {
+        frequency: 1000,
+        peak: 1
+      };
+
+      this.reverb = {
+        time: 0.1,
+        decay: 0,
+        reverse: false,
+        mix: 0.8
+      };
+
+      this.delay = {
+        feedback: 0.6,
+        time: 0.4,
+        mix: 0.5
+      };
+    }
+  }, {
+    key: 'turnVolume',
+    value: function turnVolume(volume) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.options, 'volume', volume, 'volume', delay);
+    }
+  }, {
+    key: 'turnPace',
+    value: function turnPace(pace) {
+      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
+
+      this.soundConsole.progressiveChange(this.options, 'pace', pace, 'harpegePace', delay);
+    }
+  }, {
+    key: 'playNotes',
+    value: function playNotes(notes) {
+      var _this = this;
+
+      var sounds = notes.map(function (note) {
+        var sound = _this.makeSound();
+        sound.volume = _this.options.volume;
+        sound.frequency = _teoria2.default.note(note).fq();
+
+        return sound;
+      });
+
+      var index = 0;
+
+      var soundInterval = setInterval(function () {
+        if (index >= sounds.length) {
+          clearInterval(soundInterval);
+        } else {
+          _this.playSound(sounds[index]);
+          index++;
+        }
+      }, this.options.pace);
+    }
+  }, {
+    key: 'playSound',
+    value: function playSound(sound) {
+      sound.play();
+      setTimeout(function () {
+        sound.stop();
+        setTimeout(function () {
+          sound.disconnect();
+        }, 5000);
+      }, this.options.pace);
+    }
+  }, {
+    key: 'setLowFilterProperty',
+    value: function setLowFilterProperty(property, value) {
+      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 100;
+
+      this.soundConsole.progressiveChange(this.lowFilter, property, value, 'lowFilter-' + property, delay);
+    }
+  }]);
+
+  return Whistle;
+}();
+
+exports.default = Whistle;
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1087,7 +2430,7 @@ module.exports.interval = function accidentalInterval(acc) {
 };
 
 /***/ }),
-/* 6 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1114,18 +2457,18 @@ module.exports.A4 = [3, 3]; // Relative to C0 (scientic notation, ~16.35Hz)
 module.exports.sharp = [-4, 7];
 
 /***/ }),
-/* 7 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var scientific = __webpack_require__(23);
-var helmholtz = __webpack_require__(20);
-var pitchFq = __webpack_require__(22);
-var knowledge = __webpack_require__(3);
-var vector = __webpack_require__(8);
-var Interval = __webpack_require__(4);
+var scientific = __webpack_require__(25);
+var helmholtz = __webpack_require__(22);
+var pitchFq = __webpack_require__(24);
+var knowledge = __webpack_require__(4);
+var vector = __webpack_require__(19);
+var Interval = __webpack_require__(5);
 
 function pad(str, ch, len) {
   for (; len > 0; len--) {
@@ -1340,7 +2683,7 @@ Note.fromMIDI = function (note) {
 module.exports = Note;
 
 /***/ }),
-/* 8 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1365,7 +2708,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 9 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1377,1265 +2720,116 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _pizzicato = __webpack_require__(1);
+var _eventEmitter = __webpack_require__(32);
 
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
+var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
 
-var _teoria = __webpack_require__(0);
+var _bassPlayer = __webpack_require__(34);
 
-var _teoria2 = _interopRequireDefault(_teoria);
+var _bassPlayer2 = _interopRequireDefault(_bassPlayer);
 
-var _soundConsole = __webpack_require__(2);
+var _chordBeatPlayer = __webpack_require__(35);
 
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
+var _chordBeatPlayer2 = _interopRequireDefault(_chordBeatPlayer);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _harpPlayer = __webpack_require__(36);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _harpPlayer2 = _interopRequireDefault(_harpPlayer);
 
-var BassPiano = function () {
-  function BassPiano() {
-    _classCallCheck(this, BassPiano);
+var _lightBellsPlayer = __webpack_require__(37);
 
-    this.soundConsole = new _soundConsole2.default();
-    this.playing = [];
-    this.buildOscillator();
-    this.decay = 15000;
-  }
+var _lightBellsPlayer2 = _interopRequireDefault(_lightBellsPlayer);
 
-  _createClass(BassPiano, [{
-    key: 'buildOscillator',
-    value: function buildOscillator() {
-      this.wave1 = new _pizzicato2.default.Sound({
-        source: 'wave',
-        options: {
-          type: 'sine',
-          frequency: 440,
-          attack: 0.07
-        }
-      });
-      this.wave2 = new _pizzicato2.default.Sound({
-        source: 'wave',
-        options: {
-          type: 'sine',
-          frequency: 440,
-          attack: 0.07
-        }
-      });
-      this.oscillator = new _pizzicato2.default.Group([this.wave1, this.wave2]);
+var _synthPadPlayer = __webpack_require__(38);
 
-      var ringModulator = new _pizzicato2.default.Effects.RingModulator({
-        speed: 0.1,
-        distortion: 0.06,
-        mix: 0.6
-      });
-      this.oscillator.addEffect(ringModulator);
+var _synthPadPlayer2 = _interopRequireDefault(_synthPadPlayer);
 
-      var lowFilter = new _pizzicato2.default.Effects.LowPassFilter({
-        frequency: 1000,
-        peak: 1
-      });
-      this.oscillator.addEffect(lowFilter);
+var _triangleSynthPlayer = __webpack_require__(39);
 
-      // const reverb = new Pizzicato.Effects.Reverb({
-      //   time: 0.5,
-      //   decay: 1,
-      //   reverse: false,
-      //   mix: 0.5
-      // });
-      // this.oscillator.addEffect(reverb);
+var _triangleSynthPlayer2 = _interopRequireDefault(_triangleSynthPlayer);
 
+var _tubaPlayer = __webpack_require__(40);
 
-      this.oscillator.volume = 0.2;
-    }
-  }, {
-    key: 'play',
-    value: function play(note, stop) {
+var _tubaPlayer2 = _interopRequireDefault(_tubaPlayer);
 
-      if (stop) {
-        while (this.playing.length > 0) {
-          var oscillator = this.playing.pop();
-          oscillator.stop();
-        }
-      }
+var _vibraphonePlayer = __webpack_require__(41);
 
-      this.wave1.frequency = _teoria2.default.note(note).fq();
-      this.wave2.frequency = _teoria2.default.note(note).interval('P-8').fq();
+var _vibraphonePlayer2 = _interopRequireDefault(_vibraphonePlayer);
 
-      this.oscillator.play();
+var _violinPlayer = __webpack_require__(42);
 
-      this.playing.push(this.oscillator);
-      this.startDecay(this.oscillator, this.playing.length - 1);
+var _violinPlayer2 = _interopRequireDefault(_violinPlayer);
 
-      this.buildOscillator();
-    }
-  }, {
-    key: 'startDecay',
-    value: function startDecay(oscillator, index) {
-      var _this = this;
+var _whistlePlayer = __webpack_require__(43);
 
-      this.soundConsole.progressiveChange(oscillator, 'volume', 0, 'bassDecay', this.decay);
+var _whistlePlayer2 = _interopRequireDefault(_whistlePlayer);
 
-      // Stop oscillator once done
-      setTimeout(function () {
-        oscillator.stop();
-        if (_this.playing[index] === oscillator) _this.playing.splice(index, 1);
-      }, this.decay);
-    }
-  }]);
+var _composer = __webpack_require__(31);
 
-  return BassPiano;
-}();
-
-exports.default = BassPiano;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
+var _composer2 = _interopRequireDefault(_composer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function makeSound() {
-  return new _pizzicato2.default.Sound({
-    source: 'wave',
-    options: {
-      type: 'sawtooth',
-      frequency: 440,
-      attack: 0.01,
-      release: 0.2
-    }
-  });
-}
+var Conductor = function () {
+  function Conductor() {
+    _classCallCheck(this, Conductor);
 
-var ChordBeat = function () {
-  function ChordBeat() {
-    _classCallCheck(this, ChordBeat);
+    // Go fetch a global sheet
+    // TODO
 
-    this.soundConsole = new _soundConsole2.default();
+    var composer = new _composer2.default();
+    this.sheet = composer.getSheet();
+    var tonic = 'A4';
+    this.pace = 15000;
 
-    this.options = {
-      pace: 500
-    };
+    // Create event manager
+    this.eventEmitter = new _eventEmitter2.default();
 
-    this.buildSynth();
-    this.playing = false;
+    // Create players
+    this.bassPlayer = new _bassPlayer2.default(this.eventEmitter, this.sheet.bass, tonic);
+    this.chordBeat = new _chordBeatPlayer2.default(this.eventEmitter, this.sheet.chordBeat, tonic);
+    this.harpPlayer = new _harpPlayer2.default(this.eventEmitter, this.sheet.harp, tonic);
+    this.lightBellsPlayer = new _lightBellsPlayer2.default(this.eventEmitter, this.sheet.bells, tonic);
+    this.synthPadPlayer = new _synthPadPlayer2.default(this.eventEmitter, this.sheet.synth, tonic);
+    this.triangleSynthPlayer = new _triangleSynthPlayer2.default(this.eventEmitter, this.sheet.triangleSynth, tonic);
+    this.tubaPlayer = new _tubaPlayer2.default(this.eventEmitter, this.sheet.tuba, tonic);
+    this.vibraphonePlayer = new _vibraphonePlayer2.default(this.eventEmitter, this.sheet.vibraphone, tonic);
+    this.violinPlayer = new _violinPlayer2.default(this.eventEmitter, this.sheet.violon, tonic);
+    this.whistlePlayer = new _whistlePlayer2.default(this.eventEmitter, this.sheet.whistle, tonic);
+
+    // Let's play music
+    // this.playMeasure(0);
   }
 
-  _createClass(ChordBeat, [{
-    key: 'buildSynth',
-    value: function buildSynth() {
-      this.first = makeSound(this.options.volume);
-      this.second = makeSound(this.options.volume);
-      this.third = makeSound(this.options.volume);
-
-      this.oscillator = new _pizzicato2.default.Group([this.first, this.second, this.third]);
-      this.oscillator.volume = 0.3;
-
-      this.filter = new _pizzicato2.default.Effects.HighPassFilter({
-        frequency: 600,
-        peak: 2.5
-      });
-      this.oscillator.addEffect(this.filter);
-
-      this.compressor = new _pizzicato2.default.Effects.Compressor({
-        threshold: -20,
-        // knee: 32,
-        ratio: 60
-      });
-      this.oscillator.addEffect(this.compressor);
-
-      this.reverb = new _pizzicato2.default.Effects.Reverb({
-        time: 1.3,
-        decay: 1,
-        reverse: false,
-        mix: 0.8
-      });
-      this.oscillator.addEffect(this.reverb);
-
-      this.flanger = new _pizzicato2.default.Effects.Flanger({
-        time: 0.5,
-        speed: 0.4,
-        depth: 0.2,
-        feedback: 0.2,
-        mix: 0.4
-      });
-      this.oscillator.addEffect(this.flanger);
-    }
-  }, {
-    key: 'turnVolume',
-    value: function turnVolume(volume) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.oscillator, 'volume', volume, 'volume', delay);
-    }
-  }, {
-    key: 'turnPace',
-    value: function turnPace(pace) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.options, 'pace', pace, 'harpegePace', delay);
-    }
-  }, {
-    key: 'setNotes',
-    value: function setNotes(note1, note2, note3) {
-      this.first.frequency = _teoria2.default.note(note1).fq();
-      this.second.frequency = _teoria2.default.note(note2).fq();
-      this.third.frequency = _teoria2.default.note(note3).fq();
-    }
-  }, {
-    key: 'play',
-    value: function play() {
-      if (!this.playing) {
-        this.playing = true;
-        this.playChord();
-      }
-    }
-  }, {
-    key: 'playChord',
-    value: function playChord() {
+  _createClass(Conductor, [{
+    key: 'playMeasure',
+    value: function playMeasure(index) {
       var _this = this;
 
-      if (this.playing) {
-        this.playSound();
+      var measure = this.sheet.conductor[index];
+      this.eventEmitter.emit('changeMeasure', index, measure.toneIndex, measure.chord, measure.mixolydian);
 
+      if (index + 1 < this.sheet.conductor.length) {
         setTimeout(function () {
-          _this.playChord();
-        }, this.options.pace);
-      }
-    }
-  }, {
-    key: 'playSound',
-    value: function playSound() {
-      var _this2 = this;
-
-      this.oscillator.play();
-      setTimeout(function () {
-        _this2.oscillator.stop();
-      }, 50);
-    }
-  }, {
-    key: 'stop',
-    value: function stop() {
-      this.playing = false;
-    }
-  }, {
-    key: 'setFilterProperty',
-    value: function setFilterProperty(property, value) {
-      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
-
-      this.soundConsole.progressiveChange(this.filter, property, value, 'filter-' + property, delay);
-    }
-  }, {
-    key: 'setCompressorProperty',
-    value: function setCompressorProperty(property, value) {
-      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
-
-      this.soundConsole.progressiveChange(this.compressor, property, value, 'compressor-' + property, delay);
-    }
-  }]);
-
-  return ChordBeat;
-}();
-
-exports.default = ChordBeat;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var LightBells = function () {
-  function LightBells() {
-    _classCallCheck(this, LightBells);
-
-    this.soundConsole = new _soundConsole2.default();
-  }
-
-  _createClass(LightBells, [{
-    key: 'ring',
-    value: function ring(base, scale) {
-      var _this = this;
-
-      var color = _teoria2.default.note(base).scale(scale);
-      var notes = [color.get(1), color.get(2), color.get(3), color.get(5), color.get(6)];
-
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        var _loop = function _loop() {
-          var note = _step.value;
-
-          var bell = _this.createBell(note.interval('P8').fq());
-          setTimeout(function () {
-            bell.play();
-            _this.soundConsole.progressiveChange(bell, 'volume', 0, 'bell' + Math.random() * 10, 2000);
-          }, Math.random() * 1500);
-        };
-
-        for (var _iterator = notes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          _loop();
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    }
-  }, {
-    key: 'createBell',
-    value: function createBell(frequency) {
-      var bell = new _pizzicato2.default.Sound({
-        source: 'wave',
-        options: {
-          type: 'triangle',
-          frequency: frequency,
-          attack: 0.01,
-          volume: 0.2
-        }
-      });
-
-      bell.addEffect(new _pizzicato2.default.Effects.HighPassFilter({
-        frequency: 2000,
-        peak: 1
-      }));
-
-      return bell;
-    }
-  }]);
-
-  return LightBells;
-}();
-
-exports.default = LightBells;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function makeSound(volume) {
-  return new _pizzicato2.default.Sound({
-    source: 'wave',
-    options: {
-      type: 'square',
-      frequency: 440,
-      attack: 0.01,
-      volume: volume
-    }
-  });
-}
-
-var SquareHarp = function () {
-  function SquareHarp() {
-    _classCallCheck(this, SquareHarp);
-
-    this.soundConsole = new _soundConsole2.default();
-
-    this.options = {
-      volume: 0.02,
-      pace: 100
-    };
-
-    this.buildSynth();
-    this.playing = false;
-  }
-
-  _createClass(SquareHarp, [{
-    key: 'buildSynth',
-    value: function buildSynth() {
-      this.base = makeSound(this.options.volume);
-      this.third = makeSound(this.options.volume);
-      this.fifth = makeSound(this.options.volume);
-      this.last = makeSound(this.options.volume);
-
-      this.lowFilter = new _pizzicato2.default.Effects.LowPassFilter({
-        frequency: 2000,
-        peak: 4
-      });
-      this.applyEffect(this.lowFilter);
-
-      this.reverb = new _pizzicato2.default.Effects.Reverb({
-        time: 1,
-        decay: 1,
-        reverse: false,
-        mix: 0.8
-      });
-      this.applyEffect(this.reverb);
-    }
-  }, {
-    key: 'applyEffect',
-    value: function applyEffect(effect) {
-      this.base.addEffect(effect);
-      this.third.addEffect(effect);
-      this.fifth.addEffect(effect);
-      this.last.addEffect(effect);
-    }
-  }, {
-    key: 'turnVolume',
-    value: function turnVolume(volume) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.base, 'volume', volume, 'baseVolume', delay);
-      this.soundConsole.progressiveChange(this.third, 'volume', volume, 'thirdVolume', delay);
-      this.soundConsole.progressiveChange(this.fifth, 'volume', volume, 'fifthVolume', delay);
-      this.soundConsole.progressiveChange(this.last, 'volume', volume, 'lastVolume', delay);
-    }
-  }, {
-    key: 'turnPace',
-    value: function turnPace(pace) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.options, 'pace', pace, 'harpegePace', delay);
-    }
-  }, {
-    key: 'setChord',
-    value: function setChord(base, chord) {
-      var notes = _teoria2.default.note(base).chord(chord).notes();
-
-      this.base.frequency = notes[0].fq();
-      this.third.frequency = notes[1].fq();
-      this.fifth.frequency = notes[2].fq();
-      this.last.frequency = notes.length > 3 ? notes[3].fq() : notes[0].interval('P8').fq();
-    }
-  }, {
-    key: 'play',
-    value: function play() {
-      if (!this.playing) {
-        this.playing = true;
-        this.playHarpege(0, [this.last, this.fifth, this.third, this.base]);
-      }
-    }
-  }, {
-    key: 'playHarpege',
-    value: function playHarpege(index, notes) {
-      var _this = this;
-
-      if (this.playing) {
-        this.playNote(notes[index]);
-
-        var next = (index + 1) % notes.length;
-        setTimeout(function () {
-          _this.playHarpege(next, notes);
-        }, this.options.pace);
-      }
-    }
-  }, {
-    key: 'playNote',
-    value: function playNote(sound) {
-      sound.play();
-      setTimeout(function () {
-        sound.stop();
-      }, 50);
-    }
-  }, {
-    key: 'stop',
-    value: function stop() {
-      this.playing = false;
-    }
-  }, {
-    key: 'setLowFilterProperty',
-    value: function setLowFilterProperty(property, value) {
-      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
-
-      this.soundConsole.progressiveChange(this.lowFilter, property, value, 'lowFilter-' + property, delay);
-    }
-  }, {
-    key: 'setReverbProperty',
-    value: function setReverbProperty(property, value) {
-      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
-
-      this.soundConsole.progressiveChange(this.reverb, property, value, 'reverb-' + property, delay);
-    }
-  }]);
-
-  return SquareHarp;
-}();
-
-exports.default = SquareHarp;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function makeSound() {
-  return new _pizzicato2.default.Sound({
-    source: 'wave',
-    options: {
-      type: 'sawtooth',
-      frequency: 440,
-      attack: 0
-    }
-  });
-}
-
-var SynthPad = function () {
-  function SynthPad() {
-    _classCallCheck(this, SynthPad);
-
-    this.soundConsole = new _soundConsole2.default();
-
-    this.buildSynth();
-    this.synth.play();
-  }
-
-  _createClass(SynthPad, [{
-    key: 'buildSynth',
-    value: function buildSynth() {
-      this.base = makeSound();
-      this.third = makeSound();
-      this.fifth = makeSound();
-      this.last = makeSound();
-
-      this.synth = new _pizzicato2.default.Group([this.base, this.third, this.fifth, this.last]);
-      this.synth.volume = 0;
-
-      this.lowFilter = new _pizzicato2.default.Effects.LowPassFilter({
-        frequency: 500,
-        peak: 0.1
-      });
-      this.synth.addEffect(this.lowFilter);
-    }
-  }, {
-    key: 'turnVolume',
-    value: function turnVolume(volume) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.synth, 'volume', volume, 'synthVolume', delay);
-    }
-  }, {
-    key: 'playChord',
-    value: function playChord(base, chord) {
-      var notes = _teoria2.default.note(base).chord(chord).notes();
-
-      this.base.frequency = notes[0].fq();
-      this.third.frequency = notes[1].fq();
-      this.fifth.frequency = notes[2].fq();
-      this.last.frequency = notes.length > 3 ? notes[3].fq() : notes[0].interval('P8').fq();
-    }
-  }, {
-    key: 'setLowFilterFrequency',
-    value: function setLowFilterFrequency(frequency) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.lowFilter, 'frequency', frequency, 'lowFilterFreq', delay);
-    }
-  }]);
-
-  return SynthPad;
-}();
-
-exports.default = SynthPad;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function makeSound() {
-  return new _pizzicato2.default.Sound({
-    source: 'wave',
-    options: {
-      type: 'triangle',
-      frequency: 440,
-      attack: 0
-    }
-  });
-}
-
-var TriangleChord = function () {
-  function TriangleChord() {
-    _classCallCheck(this, TriangleChord);
-
-    this.soundConsole = new _soundConsole2.default();
-
-    this.buildSynth();
-    this.synth.play();
-  }
-
-  _createClass(TriangleChord, [{
-    key: 'buildSynth',
-    value: function buildSynth() {
-      this.third = makeSound();
-      this.fifth = makeSound();
-      this.last = makeSound();
-
-      this.synth = new _pizzicato2.default.Group([this.third, this.fifth, this.last]);
-      this.synth.volume = 0;
-
-      this.filter = new _pizzicato2.default.Effects.HighPassFilter({
-        frequency: 2000,
-        peak: 4
-      });
-      this.synth.addEffect(this.filter);
-
-      this.wahwahFilter = new _pizzicato2.default.Effects.LowPassFilter({
-        frequency: 3000,
-        peak: 1,
-        mix: 0.1
-      });
-      this.synth.addEffect(this.wahwahFilter);
-      this.soundConsole.sineWave(this.wahwahFilter, 'frequency', 1000, 5000, 'wahwah');
-
-      this.tremolo = new _pizzicato2.default.Effects.Tremolo({
-        speed: 1,
-        depth: 0.5,
-        mix: 0.6
-      });
-    }
-  }, {
-    key: 'turnVolume',
-    value: function turnVolume(volume) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.synth, 'volume', volume, 'synthVolume', delay);
-    }
-  }, {
-    key: 'playChord',
-    value: function playChord(base, chord) {
-      var notes = _teoria2.default.note(base).chord(chord).notes();
-
-      this.third.frequency = notes[1].fq();
-      this.fifth.frequency = notes[2].fq();
-      this.last.frequency = notes.length > 3 ? notes[3].fq() : notes[0].interval('P8').fq();
-    }
-  }, {
-    key: 'setFilterFrequency',
-    value: function setFilterFrequency(frequency) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.filter, 'frequency', frequency, 'filterFreq', delay);
-    }
-  }]);
-
-  return TriangleChord;
-}();
-
-exports.default = TriangleChord;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Vibraphone = function () {
-  function Vibraphone() {
-    _classCallCheck(this, Vibraphone);
-
-    this.soundConsole = new _soundConsole2.default();
-
-    this.buildSynth();
-  }
-
-  _createClass(Vibraphone, [{
-    key: 'buildSynth',
-    value: function buildSynth() {
-      this.soundOptions = {
-        type: 'sine',
-        frequency: 440,
-        attack: 0.01,
-        decay: 0.1,
-        volume: 0.1
-      };
-
-      this.highFilterOptions = {
-        frequency: 500,
-        peak: 4.2
-      };
-
-      this.delayOptions = {
-        feedback: 0.7,
-        time: 0.1,
-        mix: 0.8
-      };
-
-      this.reverbOptions = {
-        time: 1,
-        decay: 1,
-        reverse: false,
-        mix: 0.8
-      };
-    }
-  }, {
-    key: 'makeSound',
-    value: function makeSound(note) {
-      var sound = new _pizzicato2.default.Sound({
-        source: 'wave',
-        options: this.soundOptions
-      });
-      sound.frequency = _teoria2.default.note(note).fq();
-      var octave = new _pizzicato2.default.Sound({
-        source: 'wave',
-        options: this.soundOptions
-      });
-      octave.frequency = _teoria2.default.note(note).interval('P8').fq();
-      var oscillator = new _pizzicato2.default.Group([sound, octave]);
-      oscillator.addEffect(new _pizzicato2.default.Effects.HighPassFilter(this.highFilterOptions));
-      oscillator.addEffect(new _pizzicato2.default.Effects.Delay(this.delayOptions));
-      // sound.addEffect(new Pizzicato.Effects.Reverb(this.reverbOptions));
-
-      return oscillator;
-    }
-  }, {
-    key: 'play',
-    value: function play(note) {
-      var sound = this.makeSound(note);
-
-      sound.play();
-      setTimeout(function () {
-        sound.stop();
-      }, 50);
-    }
-  }, {
-    key: 'setHighFilterProperty',
-    value: function setHighFilterProperty(property, value) {
-      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
-
-      this.soundConsole.progressiveChange(this.highFilterOptions, property, value, 'highFilter-' + property, delay);
-    }
-  }]);
-
-  return Vibraphone;
-}();
-
-exports.default = Vibraphone;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function makeSound() {
-  return new _pizzicato2.default.Sound({
-    source: 'wave',
-    options: {
-      type: 'sawtooth',
-      frequency: 440,
-      attack: 1,
-      release: 1,
-      volume: 0.1
-    }
-  });
-}
-
-var Violin = function () {
-  function Violin() {
-    _classCallCheck(this, Violin);
-
-    this.soundConsole = new _soundConsole2.default();
-
-    this.buildSynth();
-
-    this._playing = false;
-  }
-
-  _createClass(Violin, [{
-    key: 'buildSynth',
-    value: function buildSynth() {
-      this.oscillator = makeSound();
-
-      this.lowFilter = new _pizzicato2.default.Effects.LowPassFilter({
-        frequency: 1500,
-        peak: 2
-      });
-      this.oscillator.addEffect(this.lowFilter);
-
-      this.ringModulator = new _pizzicato2.default.Effects.RingModulator({
-        speed: 0.1,
-        distortion: 0.1,
-        mix: 0.8
-      });
-      this.oscillator.addEffect(this.ringModulator);
-    }
-  }, {
-    key: 'play',
-    value: function play(note) {
-      if (!this._playing) {
-        this.oscillator.frequency = _teoria2.default.note(note).fq();
-        this.oscillator.play();
-        this._playing = true;
+          return _this.playMeasure(index + 1);
+        }, this.pace);
       } else {
-        this.stop();
+        setTimeout(function () {
+          return _this.eventEmitter.emit('stop');
+        }, this.pace);
       }
     }
-  }, {
-    key: 'stop',
-    value: function stop() {
-      if (this._playing) {
-        this.oscillator.stop();
-        this._playing = false;
-      }
-    }
-  }, {
-    key: 'setLowFilterFrequency',
-    value: function setLowFilterFrequency(frequency) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.lowFilter, 'frequency', frequency, 'lowFilterFreq', delay);
-    }
-  }, {
-    key: 'sineFilter',
-    value: function sineFilter(property, amplitude, delay) {
-      this.soundConsole.sineWave(this.lowFilter, property, amplitude, delay, 'lowFilter-' + property);
-    }
-  }, {
-    key: 'stopSineFilter',
-    value: function stopSineFilter(property) {
-      this.soundConsole.sineWave.stopSine('lowFilter-' + property);
-    }
   }]);
 
-  return Violin;
+  return Conductor;
 }();
 
-exports.default = Violin;
+exports.default = Conductor;
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function makeSound() {
-  return new _pizzicato2.default.Sound({
-    source: 'wave',
-    options: {
-      type: 'square',
-      frequency: 440,
-      attack: 0,
-      volume: 1
-    }
-  });
-}
-
-var WaveBass = function () {
-  function WaveBass() {
-    _classCallCheck(this, WaveBass);
-
-    this.soundConsole = new _soundConsole2.default();
-
-    this.buildSynth();
-    this.synth.play();
-  }
-
-  _createClass(WaveBass, [{
-    key: 'buildSynth',
-    value: function buildSynth() {
-      this.sound1 = makeSound();
-      this.sound2 = makeSound();
-
-      this.synth = new _pizzicato2.default.Group([this.sound1, this.sound2]);
-      this.synth.volume = 0;
-
-      this.gainNode = _pizzicato2.default.context.createGain();
-      this.gainNode.gain.value = -50;
-      this.synth.connect(this.gainNode);
-
-      this.filter = new _pizzicato2.default.Effects.LowPassFilter({
-        frequency: 500,
-        peak: 0.5,
-        mix: 1
-      });
-      this.synth.addEffect(this.filter);
-
-      var ringModulator = new _pizzicato2.default.Effects.RingModulator({
-        speed: 0.1,
-        distortion: 0.06,
-        mix: 0.6
-      });
-      this.synth.addEffect(ringModulator);
-    }
-  }, {
-    key: 'play',
-    value: function play() {
-      var _this = this;
-
-      var volume = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.1;
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
-
-      this.soundConsole.progressiveChange(this.synth, 'volume', volume, 'volumeUp', delay).then(function () {
-        _this.soundConsole.progressiveChange(_this.synth, 'volume', 0, 'volumeDown', delay);
-      });
-    }
-  }, {
-    key: 'stop',
-    value: function stop() {
-      var delay = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
-
-      this.soundConsole.stopSine('waveVolume');
-      this.soundConsole.progressiveChange(this.synth, 'volume', 0, 'volumeStop', delay);
-    }
-  }, {
-    key: 'setNote',
-    value: function setNote(note) {
-      this.sound1.frequency = _teoria2.default.note(note).fq();
-      this.sound2.frequency = _teoria2.default.note(note).interval('P-8').fq();
-    }
-  }, {
-    key: 'setFilterFrequency',
-    value: function setFilterFrequency(frequency) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.filter, 'frequency', frequency, 'filterFreq', delay);
-    }
-  }]);
-
-  return WaveBass;
-}();
-
-exports.default = WaveBass;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _pizzicato = __webpack_require__(1);
-
-var _pizzicato2 = _interopRequireDefault(_pizzicato);
-
-var _teoria = __webpack_require__(0);
-
-var _teoria2 = _interopRequireDefault(_teoria);
-
-var _soundConsole = __webpack_require__(2);
-
-var _soundConsole2 = _interopRequireDefault(_soundConsole);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Whistle = function () {
-  function Whistle() {
-    _classCallCheck(this, Whistle);
-
-    this.soundConsole = new _soundConsole2.default();
-
-    this.options = {
-      volume: 0.2,
-      pace: 300
-    };
-
-    this.buildSynth();
-
-    this.playingSounds = [];
-  }
-
-  _createClass(Whistle, [{
-    key: 'makeSound',
-    value: function makeSound() {
-      var sound = new _pizzicato2.default.Sound({
-        source: 'wave',
-        options: this.soundOptions
-      });
-
-      sound.addEffect(new _pizzicato2.default.Effects.LowPassFilter(this.lowFilter));
-      // sound.addEffect(new Pizzicato.Effects.Reverb(this.reverb));
-
-      return sound;
-    }
-  }, {
-    key: 'buildSynth',
-    value: function buildSynth() {
-      this.soundOptions = {
-        type: 'triangle',
-        frequency: 440,
-        attack: 0.3,
-        release: 0.1,
-        volume: this.options.volume
-      };
-
-      this.lowFilter = {
-        frequency: 1000,
-        peak: 1
-      };
-
-      this.reverb = {
-        time: 0.1,
-        decay: 0,
-        reverse: false,
-        mix: 0.8
-      };
-    }
-  }, {
-    key: 'turnVolume',
-    value: function turnVolume(volume) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.options, 'volume', volume, 'volume', delay);
-    }
-  }, {
-    key: 'turnPace',
-    value: function turnPace(pace) {
-      var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4000;
-
-      this.soundConsole.progressiveChange(this.options, 'pace', pace, 'harpegePace', delay);
-    }
-  }, {
-    key: 'playNotes',
-    value: function playNotes(notes) {
-      var _this = this;
-
-      var sounds = notes.map(function (note) {
-        var sound = _this.makeSound();
-        sound.volume = _this.options.volume;
-        sound.frequency = _teoria2.default.note(note).fq();
-
-        return sound;
-      });
-
-      var index = 0;
-
-      var soundInterval = setInterval(function () {
-        if (index >= sounds.length) {
-          clearInterval(soundInterval);
-        } else {
-          _this.playSound(sounds[index]);
-          index++;
-        }
-      }, this.options.pace);
-    }
-  }, {
-    key: 'playSound',
-    value: function playSound(sound) {
-      sound.play();
-      setTimeout(function () {
-        sound.stop();
-      }, this.options.pace);
-    }
-  }, {
-    key: 'setLowFilterProperty',
-    value: function setLowFilterProperty(property, value) {
-      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
-
-      this.soundConsole.triangle(this.lowFilter, property, value, 'lowFilter-' + property, delay);
-    }
-  }, {
-    key: 'setReverbProperty',
-    value: function setReverbProperty(property, value) {
-      var delay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 4000;
-
-      this.soundConsole.progressiveChange(this.reverb, property, value, 'reverb-' + property, delay);
-    }
-  }]);
-
-  return Whistle;
-}();
-
-exports.default = Whistle;
-
-/***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2795,14 +2989,14 @@ module.exports = function (symbol) {
 };
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var coords = __webpack_require__(6);
-var accval = __webpack_require__(5);
+var coords = __webpack_require__(17);
+var accval = __webpack_require__(16);
 
 module.exports = function helmholtz(name) {
   var name = name.replace(/\u2032/g, "'").replace(/\u0375/g, ',');
@@ -2835,7 +3029,7 @@ module.exports = function helmholtz(name) {
 };
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2879,7 +3073,7 @@ module.exports = function (simple) {
 module.exports.coords = baseIntervals.slice(0);
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2898,14 +3092,14 @@ module.exports = function (coord, stdPitch) {
 };
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var coords = __webpack_require__(6);
-var accval = __webpack_require__(5);
+var coords = __webpack_require__(17);
+var accval = __webpack_require__(16);
 
 module.exports = function scientific(name) {
   var format = /^([a-h])(x|#|bb|b?)(-?\d*)/i;
@@ -2928,16 +3122,16 @@ module.exports = function scientific(name) {
 };
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var daccord = __webpack_require__(19);
-var knowledge = __webpack_require__(3);
-var Note = __webpack_require__(7);
-var Interval = __webpack_require__(4);
+var daccord = __webpack_require__(21);
+var knowledge = __webpack_require__(4);
+var Note = __webpack_require__(18);
+var Interval = __webpack_require__(5);
 
 function Chord(root, name) {
   if (!(this instanceof Chord)) return new Chord(root, name);
@@ -3173,14 +3367,14 @@ Chord.prototype = {
 module.exports = Chord;
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var knowledge = __webpack_require__(3);
-var Interval = __webpack_require__(4);
+var knowledge = __webpack_require__(4);
+var Interval = __webpack_require__(5);
 
 var scales = {
   aeolian: ['P1', 'M2', 'm3', 'P4', 'P5', 'm6', 'm7'],
@@ -3290,13 +3484,13 @@ Scale.KNOWN_SCALES = Object.keys(scales);
 module.exports = Scale;
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var knowledge = __webpack_require__(3);
+var knowledge = __webpack_require__(4);
 
 module.exports = function (teoria) {
   var Note = teoria.Note;
@@ -3316,7 +3510,7 @@ module.exports = function (teoria) {
 };
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3346,7 +3540,7 @@ try {
 module.exports = g;
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3376,55 +3570,465 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _bassPiano = __webpack_require__(9);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var tones = ['M', 'm', 'm', 'M', 'M', 'm', 'dim'];
+// let mixolydianTones = ['M', 'm', 'dim', 'M', 'm', 'm', 'M'];
+
+var Composer = function () {
+  function Composer() {
+    _classCallCheck(this, Composer);
+  }
+
+  _createClass(Composer, [{
+    key: 'getTone',
+    value: function getTone() {
+      return 'A';
+    }
+  }, {
+    key: 'getSheet',
+    value: function getSheet() {
+      return {
+        conductor: [{
+          toneIndex: 0,
+          chord: tones[0],
+          mixolydian: false
+        }, {
+          toneIndex: 0,
+          chord: tones[0],
+          mixolydian: false
+        },
+        // A
+        {
+          toneIndex: 0,
+          chord: tones[0],
+          mixolydian: false
+        }, {
+          toneIndex: 3, // 5 // 2
+          chord: tones[3],
+          mixolydian: false
+        }, {
+          toneIndex: 0,
+          chord: tones[0],
+          mixolydian: false
+        }, {
+          toneIndex: 3,
+          chord: tones[3],
+          mixolydian: false
+        },
+        // B
+        {
+          toneIndex: 1, // 3  // 5
+          chord: tones[1] + '7',
+          mixolydian: false
+        }, {
+          toneIndex: 2, // 3  // 5
+          chord: tones[2],
+          mixolydian: false
+        }, {
+          toneIndex: 1, // 3  // 5
+          chord: tones[1],
+          mixolydian: false
+        }, {
+          toneIndex: 6, // 3  // 5
+          chord: tones[6],
+          mixolydian: false
+        },
+        // A
+        {
+          toneIndex: 0,
+          chord: tones[0] + '7',
+          mixolydian: false
+        }, {
+          toneIndex: 5, // 5 // 2
+          chord: tones[5],
+          mixolydian: false
+        }, {
+          toneIndex: 0,
+          chord: tones[0] + '7',
+          mixolydian: false
+        }, {
+          toneIndex: 5,
+          chord: tones[5],
+          mixolydian: false
+        },
+        // C
+        {
+          toneIndex: 1,
+          chord: tones[1],
+          mixolydian: true
+        }, {
+          toneIndex: 2,
+          chord: tones[2],
+          mixolydian: true
+        }, {
+          toneIndex: 5,
+          chord: tones[5],
+          mixolydian: true
+        }, {
+          toneIndex: 4,
+          chord: tones[4],
+          mixolydian: false
+        },
+        // A
+        {
+          toneIndex: 0,
+          chord: tones[0],
+          mixolydian: false
+        }, {
+          toneIndex: 3, // 5 // 2
+          chord: tones[3] + '7',
+          mixolydian: false
+        }, {
+          toneIndex: 0,
+          chord: tones[0],
+          mixolydian: false
+        }, {
+          toneIndex: 0,
+          chord: tones[0],
+          mixolydian: false
+        }],
+        bass: [{
+          interval: 8000, active: false
+        }, {
+          interval: 8000, active: true
+        },
+        // A
+        {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        },
+        // B
+        {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        },
+        // A
+        {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        },
+        // C
+        {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        },
+        // A
+        {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: true
+        }, {
+          interval: 8000, active: false
+        }],
+        chordBeat: [{}, {},
+        // A
+        {}, {}, {}, {},
+        // B
+        {}, { active: true, volume: { level: 2, delay: 6000 } }, { active: true }, { active: true, global: true, volume: { level: 1, delay: 4000 } },
+        // A
+        { active: true, global: true, volume: { level: 1, delay: 4000 }, filter: { level: 2, delay: 8000 }, compressor: { level: 2, delay: 8000 } }, { active: true, global: true }, { active: true, volume: { level: 0, delay: 10000 }, pace: { value: 800, delay: 10000 } }, {},
+        // C
+        {}, {}, {}, { active: true, volume: { level: 3, delay: 8000 } },
+        // A
+        { active: true, volume: { level: 1, delay: 8000 }, pace: { value: 600, delay: 10000 } }, { active: true, volume: { level: 0, delay: 8000 } }, {}, {}],
+        harp: [{}, {},
+        // A
+        {}, {}, {}, {},
+        // B
+        {}, {}, {}, { playing: true, volume: { level: 1, delay: 9000 } },
+        // A
+        { playing: true, filter: { level: 0, delay: 10000 } }, { playing: true, volume: { level: 2, delay: 9000 }, filter: { level: 1, delay: 4000 } }, { playing: true, volume: { level: 1, delay: 9000 }, paces: [{ level: 3, delay: 5000 }, { level: 1, delay: 2000 }] }, { playing: true, volume: { level: 0, delay: 6000 } },
+        // C
+        {}, {}, {}, { playing: true, filter: { level: 2, delay: 5000 }, paces: [{ level: 0, delay: 2000 }, { level: 2, delay: 5000 }], volume: { level: 2, delay: 4000 } },
+        // A
+        { playing: true }, {}, {}, {}],
+        bells: [{}, {},
+        // A
+        { tonic: true, delay: 5000 }, { tonic: true, delay: 5000 }, { tonic: true, delay: 5000 }, { tonic: true, delay: 5000 },
+        // B
+        {}, {}, { tonic: true, delay: 5000 }, { tonic: true, delay: 5000 },
+        // A
+        {}, {}, {}, {},
+        // C
+        { chord: true, delay: 5000 }, { chord: true, delay: 5000 }, { chord: true, delay: 5000 }, { chord: true, delay: 5000 },
+        // A
+        { tonic: true, delay: 5000 }, { tonic: true, delay: 5000 }, { tonic: true, delay: 5000 }, { tonic: true, delay: 5000 }],
+        synth: [{
+          volume: {
+            level: 1, speed: 9000
+          },
+          filter: {
+            level: 0, speed: 100
+          }
+        }, {},
+        // A
+        {}, {}, {}, {},
+        // B
+        { filter: {
+            level: 2, speed: 9000
+          } }, {}, {}, {},
+        // A
+        {}, {}, {}, {},
+        // C
+        { volume: {
+            level: 2, speed: 9000
+          },
+          filter: {
+            level: 0, speed: 9000
+          } }, {}, {}, {},
+        // A
+        { volume: {
+            level: 1, speed: 9000
+          },
+          filter: {
+            level: 1, speed: 9000
+          } }, {}, {}, {}],
+        triangleSynth: [{}, {},
+        // A
+        {}, {}, {}, {},
+        // B
+        {}, {}, {}, {},
+        // A
+        { volume: { level: 1, delay: 5000 } }, {}, { filter: { level: 2, delay: 6000 } }, {},
+        // C
+        { filter: { level: 0, delay: 6000 }, volume: { level: 2, delay: 5000 } }, {}, { wawah: { level: 2, delay: 6000 } }, {},
+        // A
+        { filter: { level: 1, delay: 6000 }, volume: { level: 1, delay: 5000 }, wahwah: { level: 1, delay: 5000 } }, {}, { volume: { level: 0, delay: 4000 } }, {}],
+        tuba: [{}, {},
+        // A
+        {}, {}, {}, {},
+        // B
+        {}, {}, {}, {},
+        // A
+        {}, {}, { active: true, pace: 800, delay: 2500, volume: { level: 1 } }, { active: true, pace: 800, delay: 2500, volume: { level: 1 } },
+        // C
+        { active: true, pace: 800, delay: 2000, volume: { level: 0 } }, { active: true, pace: 800, delay: 2000, volume: { level: 0 } }, { active: true, pace: 800, delay: 1800, volume: { level: 2 } }, { active: true, pace: 800, delay: 2000, volume: { level: 1 } },
+        // A
+        { active: true, pace: 800, delay: 2500, volume: { level: 1 } }, {}, {}, {}],
+        vibraphone: [{}, {},
+        // A
+        {}, {}, { active: true, pace: 6000, interval: 400, delay: 1400 }, { active: true, pace: 6000, interval: 400, multiple: true, delay: 1571 },
+        // B
+        {}, { active: true, pace: 6000, interval: 400, multiple: true, delay: 1643 }, { active: true, pace: 6000, interval: 400, multiple: true, delay: 1346 }, {},
+        // A
+        { active: true, pace: 4000, interval: 600, multiple: true, delay: 1348 }, { active: true, pace: 4000, interval: 500, multiple: true, delay: 1649 }, {}, {},
+        // C
+        {}, { active: true, pace: 6000, interval: 400, multiple: true, delay: 843 }, {}, { active: true, pace: 6000, interval: 400, multiple: true, delay: 1148 },
+        // A
+        { active: true, pace: 6000, interval: 400, multiple: true, delay: 1469 }, {}, { active: true, pace: 6000, interval: 400, delay: 1264 }, {}],
+
+        violon: [{}, {},
+        // A
+        {}, {}, { play: { pattern: 2, length: 2000, delay: 3500 }, filter: { level: 0, speed: 4000 }, delay: 1411 }, { play: { pattern: 2, length: 2000, delay: 3500 }, delay: 1681 },
+        // B
+        {}, { play: { pattern: 0, length: 2000, delay: 3500 }, filter: { level: 1, speed: 4000 }, delay: 812 }, { play: { pattern: 0, length: 2000, delay: 3500 }, delay: 1648 }, {},
+        // A
+        { play: { pattern: 4, length: 2000, delay: 3500 }, filter: { level: 2, speed: 8000 }, tremolo: { setting: 1 }, delay: 1436 }, { play: { pattern: 4, length: 2000, delay: 3500 }, delay: 1854 }, {}, {},
+        // C
+        { play: { pattern: 2, length: 2000, delay: 3500 }, filter: { level: 0, speed: 4000 } }, {}, { play: { pattern: 1, length: 1500, delay: 3000 }, filter: { level: 1, speed: 4000 } }, {},
+        // A
+        {}, { play: { pattern: 3, length: 2000, delay: 3500 }, filter: { level: 1, speed: 4000 }, tremolo: { stop: true } }, {}, {}],
+        whistle: [{}, { active: true, pattern: 0, delay: 1500, volume: { level: 2, delay: 500 }, pace: { value: 300, delay: 500 } },
+        // A
+        { active: true, pattern: 0, delay: 1500, volume: { level: 1, delay: 500 } }, { active: true, pattern: 1, delay: 1500 }, { active: true, pattern: 2, pace: { value: 200, delay: 500 }, delay: 1500 }, {},
+        // B
+        {}, {}, { active: true, pattern: 0, delay: 1500 }, {},
+        // A
+        {}, {}, { active: true, pattern: 1, pace: { value: 300, delay: 500 }, delay: 1500 }, { active: true, pattern: 1, delay: 1500 },
+        // C
+        { active: true, pattern: 0, delay: 1500, pace: { value: 200, delay: 500 } }, { active: true, pattern: 1 }, { active: true, pattern: 2, delay: 1500 }, { active: true, pattern: 1, delay: 1500 },
+        // A
+        { active: true, pattern: 0, delay: 1500, pace: { value: 300, delay: 500 } }, { active: true, pattern: 2, delay: 1500 }, { active: true, pattern: 0, delay: 1500 }, {}]
+      };
+    }
+  }]);
+
+  return Composer;
+}();
+
+exports.default = Composer;
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EventEmitter = function () {
+  function EventEmitter() {
+    _classCallCheck(this, EventEmitter);
+
+    this.listeners = {};
+  }
+
+  _createClass(EventEmitter, [{
+    key: "subscribe",
+    value: function subscribe(event, callback) {
+      this.listeners[event] = this.listeners[event] || [];
+      this.listeners[event].push(callback);
+    }
+  }, {
+    key: "unsubscribe",
+    value: function unsubscribe(event, callback) {
+      if (this.listeners[event]) {
+        var index = this.listeners[event].findIndex(function (cb) {
+          return cb === callback;
+        });
+        if (index > -1) {
+          this.listeners[event].splice(index, 1);
+        }
+      }
+    }
+  }, {
+    key: "emit",
+    value: function emit(event) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      if (this.listeners[event]) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          var _loop = function _loop() {
+            var callback = _step.value;
+
+            new Promise(function (resolve) {
+              callback.apply(undefined, args);
+              resolve();
+            });
+          };
+
+          for (var _iterator = this.listeners[event][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            _loop();
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+    }
+  }]);
+
+  return EventEmitter;
+}();
+
+exports.default = EventEmitter;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _bassPiano = __webpack_require__(6);
 
 var _bassPiano2 = _interopRequireDefault(_bassPiano);
 
-var _synthPad = __webpack_require__(13);
+var _synthPad = __webpack_require__(10);
 
 var _synthPad2 = _interopRequireDefault(_synthPad);
 
-var _lightBells = __webpack_require__(11);
+var _lightBells = __webpack_require__(8);
 
 var _lightBells2 = _interopRequireDefault(_lightBells);
 
-var _violin = __webpack_require__(16);
+var _violin = __webpack_require__(14);
 
 var _violin2 = _interopRequireDefault(_violin);
 
-var _squareHarp = __webpack_require__(12);
+var _squareHarp = __webpack_require__(9);
 
 var _squareHarp2 = _interopRequireDefault(_squareHarp);
 
-var _vibraphone = __webpack_require__(15);
+var _vibraphone = __webpack_require__(13);
 
 var _vibraphone2 = _interopRequireDefault(_vibraphone);
 
-var _chordBeat = __webpack_require__(10);
+var _chordBeat = __webpack_require__(7);
 
 var _chordBeat2 = _interopRequireDefault(_chordBeat);
 
-var _triangleChord = __webpack_require__(14);
+var _triangleChord = __webpack_require__(11);
 
 var _triangleChord2 = _interopRequireDefault(_triangleChord);
 
-var _waveBass = __webpack_require__(17);
+var _tuba = __webpack_require__(12);
 
-var _waveBass2 = _interopRequireDefault(_waveBass);
+var _tuba2 = _interopRequireDefault(_tuba);
 
-var _whistle = __webpack_require__(18);
+var _whistle = __webpack_require__(15);
 
 var _whistle2 = _interopRequireDefault(_whistle);
+
+var _conductor = __webpack_require__(20);
+
+var _conductor2 = _interopRequireDefault(_conductor);
 
 var _teoria = __webpack_require__(0);
 
 var _teoria2 = _interopRequireDefault(_teoria);
+
+var _pizzicato = __webpack_require__(1);
+
+var _pizzicato2 = _interopRequireDefault(_pizzicato);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3454,7 +4058,7 @@ var triangleChord = new _triangleChord2.default();
 triangleChord.playChord('a4', 'M7');
 var trianglePlaying = false;
 
-var waveBass = new _waveBass2.default();
+var waveBass = new _tuba2.default();
 waveBass.setNote('E2');
 
 var whistle = new _whistle2.default();
@@ -3463,6 +4067,7 @@ var shift = false;
 var someNotes = ['a4', 'c#4', 'e4', 'g#4', 'b4'];
 var index = 0;
 
+_pizzicato2.default.volume = 0.3;
 window.playA4 = function () {
   bassPiano.play(shift ? 'c#3' : 'a2', true);
 };
@@ -3548,8 +4153,1082 @@ window.switchChord = function () {
   }
 };
 
+window.createConductor = function () {
+  var conductor = new _conductor2.default();
+  conductor.playMeasure(0);
+  document.getElementById('intro').className += ' hidden';
+  document.getElementById('intro').setAttribute('aria-hidden', true);
+  document.getElementById('playing').className = '';
+  document.getElementById('playing').setAttribute('aria-hidden', false);
+};
+
+window.playInstruments = function () {
+  document.getElementById('intro').className += ' hidden';
+  document.getElementById('intro').setAttribute('aria-hidden', true);
+  document.getElementById('instruments').className = '';
+  document.getElementById('instruments').setAttribute('aria-hidden', false);
+};
+
 /***/ }),
-/* 30 */
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _bassPiano = __webpack_require__(6);
+
+var _bassPiano2 = _interopRequireDefault(_bassPiano);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BassPlayer = function (_Player) {
+  _inherits(BassPlayer, _Player);
+
+  function BassPlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, BassPlayer);
+
+    var _this = _possibleConstructorReturn(this, (BassPlayer.__proto__ || Object.getPrototypeOf(BassPlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.bass = new _bassPiano2.default();
+    _this.color = _this.color.interval('P-8').interval('P-8');
+    _this.mixolydian = _this.mixolydian.interval('P-8').interval('P-8');
+    return _this;
+  }
+
+  _createClass(BassPlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index, noteIndex, chord, mixolydian) {
+      var _this2 = this;
+
+      var measure = this.sheet[index];
+
+      var bassNote = (mixolydian ? this.mixolydian : this.color).notes()[noteIndex].scientific();
+
+      if (this.interval) {
+        clearInterval(this.interval);
+        delete this.interval;
+      }
+
+      if (measure.active) {
+        this.play(bassNote, true);
+        this.interval = setInterval(function () {
+          _this2.play(bassNote, false);
+        }, measure.interval);
+      }
+    }
+  }, {
+    key: 'play',
+    value: function play(note, stop) {
+      this.bass.play(note, stop);
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      if (this.interval) {
+        clearInterval(this.interval);
+        delete this.interval;
+      }
+      _get(BassPlayer.prototype.__proto__ || Object.getPrototypeOf(BassPlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return BassPlayer;
+}(_player2.default);
+
+exports.default = BassPlayer;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _chordBeat = __webpack_require__(7);
+
+var _chordBeat2 = _interopRequireDefault(_chordBeat);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ChordBeatPlayer = function (_Player) {
+  _inherits(ChordBeatPlayer, _Player);
+
+  function ChordBeatPlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, ChordBeatPlayer);
+
+    var _this = _possibleConstructorReturn(this, (ChordBeatPlayer.__proto__ || Object.getPrototypeOf(ChordBeatPlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.chordbeat = new _chordBeat2.default();
+    _this.chordbeat.turnVolume(0, 100);
+    _this.volume = 0;
+
+    _this.settings = {
+      volumes: {
+        0: 0,
+        1: 0.15,
+        2: 0.2,
+        3: 0.3
+      },
+      filters: {
+        0: 400,
+        1: 600,
+        2: 800
+      },
+      compressors: {
+        0: -10,
+        1: -20,
+        2: -40
+      }
+    };
+    return _this;
+  }
+
+  _createClass(ChordBeatPlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index, noteIndex, chord, mixolydian) {
+      var measure = this.sheet[index];
+      var scale = mixolydian ? this.mixolydian : this.color;
+
+      if (measure.active) {
+        var notes = [];
+        if (measure.global) {
+          notes.push(scale.notes()[2].scientific());
+          notes.push(scale.notes()[4].scientific());
+          notes.push(scale.notes()[1].interval('P8').scientific());
+        } else {
+          var _arr = [2, 4, 8];
+
+          for (var _i = 0; _i < _arr.length; _i++) {
+            var interval = _arr[_i];
+            var chordIndex = (noteIndex + interval) % scale.notes().length;
+            var note = scale.notes()[chordIndex];
+            if (chordIndex === 0) {
+              note = note.interval('P8');
+            }
+            notes.push(note.scientific());
+          }
+        }
+
+        this.chordbeat.setNotes(notes[0], notes[1], notes[2]);
+
+        if (!this.playing) {
+          this.chordbeat.play();
+          this.playing = true;
+        }
+      } else {
+        if (this.playing) {
+          this.chordbeat.stop();
+        }
+        this.playing = false;
+      }
+
+      if (measure.volume) {
+        this.chordbeat.turnVolume(this.settings.volumes[measure.volume.level], measure.volume.delay);
+        this.volume = measure.volume.level;
+      }
+      if (measure.pace) {
+        this.chordbeat.turnPace(measure.pace.value, measure.pace.delay);
+      }
+
+      if (measure.filter) {
+        this.chordbeat.setFilterProperty('frequency', this.settings.filters[measure.filter.level] + (Math.random() * 200 - 100), measure.filter.delay);
+      }
+
+      if (measure.compressor) {
+        this.chordbeat.setCompressorProperty('threshold', this.settings.compressors[measure.compressor.level] + (Math.random() * 10 - 5), measure.compressor.delay);
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      if (this.playing) {
+        this.chordbeat.stop();
+        this.playing = false;
+      }
+      _get(ChordBeatPlayer.prototype.__proto__ || Object.getPrototypeOf(ChordBeatPlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return ChordBeatPlayer;
+}(_player2.default);
+
+exports.default = ChordBeatPlayer;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _squareHarp = __webpack_require__(9);
+
+var _squareHarp2 = _interopRequireDefault(_squareHarp);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HarpPlayer = function (_Player) {
+  _inherits(HarpPlayer, _Player);
+
+  function HarpPlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, HarpPlayer);
+
+    var _this = _possibleConstructorReturn(this, (HarpPlayer.__proto__ || Object.getPrototypeOf(HarpPlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.harp = new _squareHarp2.default();
+    _this.harp.turnVolume(0, 100);
+    _this.volume = 0;
+
+    _this.settings = {
+      volumes: {
+        0: 0,
+        1: 0.01,
+        2: 0.02
+      },
+      filters: {
+        0: 1500,
+        1: 2000,
+        2: 2500,
+        3: 3000
+      },
+      paces: {
+        0: 600,
+        1: 300,
+        2: 100,
+        3: 50
+      }
+    };
+
+    _this.playing = false;
+    return _this;
+  }
+
+  _createClass(HarpPlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index, noteIndex, chord, mixolydian) {
+      var _this2 = this;
+
+      var measure = this.sheet[index];
+
+      this.harp.setChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex].interval('P-8').scientific(), chord);
+
+      if (measure.playing && !this.playing) {
+        this.harp.play();
+        this.playing = true;
+      } else if (!measure.playing && this.playing) {
+        this.harp.stop();
+        this.playing = false;
+      }
+
+      if (measure.volume && measure.volume.level !== this.volume) {
+        this.harp.turnVolume(this.settings.volumes[measure.volume.level], measure.volume.delay);
+        this.volume = measure.volume.level;
+      }
+
+      if (measure.filter) {
+        this.harp.setLowFilterProperty('frequency', this.settings.filters[measure.filter.level] + (Math.random() * 1000 - 500), measure.filter.delay);
+      }
+
+      if (measure.paces && measure.paces.length > 0) {
+        measure.paces.reduce(function (promise, pace) {
+          return promise.then(function () {
+            var rngPace = _this2.settings.paces[pace.level];
+            rngPace += Math.random() * rngPace * 2 / 3 - rngPace / 3;
+            return _this2.harp.turnPace(rngPace, pace.delay);
+          });
+        }, Promise.resolve());
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      if (this.playing) {
+        this.harp.stop();
+        this.playing = false;
+      }
+      _get(HarpPlayer.prototype.__proto__ || Object.getPrototypeOf(HarpPlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return HarpPlayer;
+}(_player2.default);
+
+exports.default = HarpPlayer;
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _lightBells = __webpack_require__(8);
+
+var _lightBells2 = _interopRequireDefault(_lightBells);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LightBellsPlayer = function (_Player) {
+  _inherits(LightBellsPlayer, _Player);
+
+  function LightBellsPlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, LightBellsPlayer);
+
+    var _this = _possibleConstructorReturn(this, (LightBellsPlayer.__proto__ || Object.getPrototypeOf(LightBellsPlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.bells = new _lightBells2.default();
+    return _this;
+  }
+
+  _createClass(LightBellsPlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index, noteIndex, chord) {
+      var _this2 = this;
+
+      var measure = this.sheet[index];
+
+      if (this.interval) {
+        clearInterval(this.interval);
+        delete this.interval;
+      }
+
+      if (measure.tonic) {
+        this.interval = setInterval(function () {
+          _this2.bells.ring(_this2.color.notes()[0].scientific(), 'major');
+        }, measure.delay);
+      } else if (measure.chord) {
+        this.interval = setInterval(function () {
+          _this2.bells.ring(_this2.color.notes()[noteIndex].scientific(), chord.startsWith('M') ? 'major' : 'minor');
+        }, measure.delay);
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      if (this.interval) {
+        clearInterval(this.interval);
+        delete this.interval;
+      }
+      _get(LightBellsPlayer.prototype.__proto__ || Object.getPrototypeOf(LightBellsPlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return LightBellsPlayer;
+}(_player2.default);
+
+exports.default = LightBellsPlayer;
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _synthPad = __webpack_require__(10);
+
+var _synthPad2 = _interopRequireDefault(_synthPad);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SynthPadPlayer = function (_Player) {
+  _inherits(SynthPadPlayer, _Player);
+
+  function SynthPadPlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, SynthPadPlayer);
+
+    var _this = _possibleConstructorReturn(this, (SynthPadPlayer.__proto__ || Object.getPrototypeOf(SynthPadPlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.synth = new _synthPad2.default();
+
+    _this.levels = {
+      volumes: {
+        0: 0,
+        1: 0.05,
+        2: 0.1
+      },
+      filters: {
+        0: 1000,
+        1: 2000,
+        2: 2500
+      }
+    };
+    return _this;
+  }
+
+  _createClass(SynthPadPlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index, noteIndex, chord, mixolydian) {
+      var measure = this.sheet[index];
+
+      this.synth.playChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex].interval('P-8').scientific(), chord);
+
+      if (measure.volume) {
+        this.synth.turnVolume(this.levels.volumes[measure.volume.level], measure.volume.speed);
+      }
+      if (measure.filter) {
+        var freq = this.levels.filters[measure.filter.level] + (Math.random() * 1000 - 500);
+        this.synth.setLowFilterFrequency(freq, measure.filter.speed);
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      this.synth.turnVolume(0, 100);
+      _get(SynthPadPlayer.prototype.__proto__ || Object.getPrototypeOf(SynthPadPlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return SynthPadPlayer;
+}(_player2.default);
+
+exports.default = SynthPadPlayer;
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _triangleChord = __webpack_require__(11);
+
+var _triangleChord2 = _interopRequireDefault(_triangleChord);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TriangleSynthPlayer = function (_Player) {
+  _inherits(TriangleSynthPlayer, _Player);
+
+  function TriangleSynthPlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, TriangleSynthPlayer);
+
+    var _this = _possibleConstructorReturn(this, (TriangleSynthPlayer.__proto__ || Object.getPrototypeOf(TriangleSynthPlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.synth = new _triangleChord2.default();
+
+    _this.levels = {
+      volumes: {
+        0: 0,
+        1: 0.1,
+        2: 0.15
+      },
+      filters: {
+        0: 2000,
+        1: 2500,
+        2: 3000
+      },
+      wahwah: {
+        0: 1000,
+        1: 1500,
+        2: 2500
+      }
+    };
+    return _this;
+  }
+
+  _createClass(TriangleSynthPlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index, noteIndex, chord, mixolydian) {
+      var measure = this.sheet[index];
+
+      this.synth.playChord((mixolydian ? this.mixolydian : this.color).notes()[noteIndex].scientific(), chord);
+
+      if (measure.volume) {
+        this.synth.turnVolume(this.levels.volumes[measure.volume.level], measure.volume.delay);
+      }
+      if (measure.filter) {
+        this.synth.setFilterFrequency(this.levels.filters[measure.filter.level] + (Math.random() * 1000 - 500), measure.filter.delay);
+      }
+      if (measure.wahwah) {
+        this.synth.setWahWah(this.levels.wahwah[measure.wahwah.level], measure.wahwah.delay);
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      this.synth.turnVolume(0, 100);
+      _get(TriangleSynthPlayer.prototype.__proto__ || Object.getPrototypeOf(TriangleSynthPlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return TriangleSynthPlayer;
+}(_player2.default);
+
+exports.default = TriangleSynthPlayer;
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _tuba = __webpack_require__(12);
+
+var _tuba2 = _interopRequireDefault(_tuba);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TubaPlayer = function (_Player) {
+  _inherits(TubaPlayer, _Player);
+
+  function TubaPlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, TubaPlayer);
+
+    var _this = _possibleConstructorReturn(this, (TubaPlayer.__proto__ || Object.getPrototypeOf(TubaPlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.tuba = new _tuba2.default();
+
+    _this.settings = {
+      volumes: {
+        0: 0,
+        1: 0.05,
+        2: 0.1
+      },
+      filters: {
+        0: 300,
+        1: 500,
+        2: 700
+      }
+    };
+
+    _this.tuba.setNote(_this.color.notes()[0].interval('P-8').interval('P-8').scientific());
+    return _this;
+  }
+
+  _createClass(TubaPlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index) {
+      var _this2 = this;
+
+      var measure = this.sheet[index];
+
+      if (this.interval) {
+        clearInterval(this.interval);
+        delete this.interval;
+      }
+
+      if (measure.active) {
+        var volume = measure.volume ? this.settings.volumes[measure.volume.level] : this.settings[0];
+        this.interval = setInterval(function () {
+          _this2.tuba.play(volume, measure.pace);
+        }, measure.delay + Math.random() * 0.4 * measure.delay - 0.2 * measure.delay);
+      }
+
+      if (measure.filter) {
+        this.tuba.setFilterFrequency(this.settings.filters[measure.filter.level], measure.filter.delay);
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      if (this.interval) {
+        clearInterval(this.interval);
+        delete this.interval;
+      }
+      _get(TubaPlayer.prototype.__proto__ || Object.getPrototypeOf(TubaPlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return TubaPlayer;
+}(_player2.default);
+
+exports.default = TubaPlayer;
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _vibraphone = __webpack_require__(13);
+
+var _vibraphone2 = _interopRequireDefault(_vibraphone);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var VibraphonePlayer = function (_Player) {
+  _inherits(VibraphonePlayer, _Player);
+
+  function VibraphonePlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, VibraphonePlayer);
+
+    var _this = _possibleConstructorReturn(this, (VibraphonePlayer.__proto__ || Object.getPrototypeOf(VibraphonePlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.vibraphone = new _vibraphone2.default();
+
+    _this.mixolydianActive = false;
+    return _this;
+  }
+
+  _createClass(VibraphonePlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index, noteIndex, chord, mixolydian) {
+      var _this2 = this;
+
+      var measure = this.sheet[index];
+
+      this.active = measure.active;
+      // delay before activations
+      this.pace = measure.pace;
+      // delay between individual notes
+      this.interval = measure.interval;
+      // Several note for each activation
+      this.multiple = measure.multiple;
+      this.mixolydianActive = mixolydian;
+
+      if (measure.active && !this.playing) {
+        setTimeout(function () {
+          _this2.play(measure.multiple ? 1 + Math.round(Math.random() * 2) : 1);
+        }, measure.delay || 0);
+        this.playing = true;
+      } else if (!measure.active) {
+        this.playing = false;
+      }
+    }
+  }, {
+    key: 'play',
+    value: function play(nbNotes) {
+      var _this3 = this;
+
+      var notes = [];
+      for (var i = 0; i < nbNotes; i++) {
+        notes.push(Math.floor(Math.random() * this.color.notes().length));
+      }
+
+      notes.reduce(function (promise, noteIndex) {
+        return promise.then(function () {
+          _this3.vibraphone.play((_this3.mixolydianActive ? _this3.mixolydian : _this3.color).notes()[noteIndex].scientific());
+          return new Promise(function (resolve) {
+            return setTimeout(resolve, _this3.interval);
+          });
+        });
+      }, Promise.resolve());
+
+      if (this.active) {
+        var randomDelay = 0.2 * this.pace;
+        setTimeout(function () {
+          _this3.play(_this3.multiple ? 1 + Math.round(Math.random() * 2) : 1);
+        }, this.pace + (Math.random() * 2 * randomDelay - randomDelay / 2));
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      this.active = false;
+      this.playing = false;
+      _get(VibraphonePlayer.prototype.__proto__ || Object.getPrototypeOf(VibraphonePlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return VibraphonePlayer;
+}(_player2.default);
+
+exports.default = VibraphonePlayer;
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _violin = __webpack_require__(14);
+
+var _violin2 = _interopRequireDefault(_violin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SynthPadPlayer = function (_Player) {
+  _inherits(SynthPadPlayer, _Player);
+
+  function SynthPadPlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, SynthPadPlayer);
+
+    var _this = _possibleConstructorReturn(this, (SynthPadPlayer.__proto__ || Object.getPrototypeOf(SynthPadPlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.violin = new _violin2.default();
+
+    _this.settings = {
+      filters: {
+        0: 1000,
+        1: 1500,
+        2: 2000
+      },
+      tremolo: {
+        0: {
+          amp: 500,
+          freq: 1000
+        },
+        1: {
+          amp: 400,
+          freq: 500
+        },
+        2: {
+          amp: 300,
+          freq: 200
+        }
+      },
+      patterns: {
+        0: [9, 10, 5, 7],
+        1: [1, 2, 8, 9],
+        2: [5, 2, 4, 8, 6],
+        3: [1, 5, 9, 13],
+        4: [8, 2, 5, 6]
+      }
+    };
+
+    _this.state = {
+      active: false,
+      playing: false,
+      notes: [],
+      length: 0,
+      delay: 0
+    };
+    return _this;
+  }
+
+  _createClass(SynthPadPlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index, note, chord, mixolydian) {
+      var _this2 = this;
+
+      var measure = this.sheet[index];
+
+      if (measure.filter) {
+        this.violin.setLowFilterFrequency(this.settings.filters[measure.filter.level] + (Math.random() * 1000 - 500), measure.filter.speed);
+      }
+
+      if (measure.tremolo) {
+        if (measure.tremolo.stop) {
+          this.violin.stopSineFilter('frequency');
+        } else {
+          this.violin.sineFilter('frequency', this.settings.tremolo[measure.tremolo.setting].amp, this.settings.tremolo[measure.tremolo.setting].freq);
+        }
+      }
+
+      if (measure.play) {
+        this.state.notes = this.settings.patterns[measure.play.pattern || 0].map(function (noteIndex) {
+          var note = (mixolydian ? _this2.mixolydian : _this2.color).notes()[noteIndex % 7];
+          for (var octave = 0; octave < Math.floor((noteIndex - 1) / 7); octave++) {
+            note = note.interval('P8');
+          }
+
+          return note.scientific();
+        });
+
+        this.state.length = measure.play.length;
+        this.state.delay = measure.play.delay;
+
+        if (!this.state.active) {
+          this.state.active = true;
+          setTimeout(function () {
+            _this2.playNotes(0);
+          }, measure.delay || 0);
+        }
+      } else {
+        this.state.active = false;
+      }
+    }
+  }, {
+    key: 'playNotes',
+    value: function playNotes(index) {
+      var _this3 = this;
+
+      if (this.state.playing) {
+        this.violin.stop();
+        this.state.playing = false;
+
+        if (this.state.active) {
+          setTimeout(function () {
+            _this3.playNotes((index + 1) % _this3.state.notes.length);
+          }, this.state.delay);
+        }
+      } else if (this.state.active) {
+        // Reset index if pattern length has changed 
+        index = index >= this.state.notes.length ? 0 : index;
+        this.violin.play(this.state.notes[index]);
+        this.state.playing = true;
+
+        setTimeout(function () {
+          _this3.playNotes(index);
+        }, this.state.length);
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      if (this.state.playing) {
+        this.violin.stop();
+        this.state.playing = false;
+      }
+      this.state.active = false;
+      _get(SynthPadPlayer.prototype.__proto__ || Object.getPrototypeOf(SynthPadPlayer.prototype), 'stop', this).call(this);
+    }
+  }]);
+
+  return SynthPadPlayer;
+}(_player2.default);
+
+exports.default = SynthPadPlayer;
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _player = __webpack_require__(3);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _whistle = __webpack_require__(15);
+
+var _whistle2 = _interopRequireDefault(_whistle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var WhistlePlayer = function (_Player) {
+  _inherits(WhistlePlayer, _Player);
+
+  function WhistlePlayer(eventEmitter, sheet, tonic) {
+    _classCallCheck(this, WhistlePlayer);
+
+    var _this = _possibleConstructorReturn(this, (WhistlePlayer.__proto__ || Object.getPrototypeOf(WhistlePlayer)).call(this, eventEmitter, sheet, tonic));
+
+    _this.whistle = new _whistle2.default();
+    _this.whistle.setLowFilterProperty('frequency', Math.floor(Math.random() * 1000 + 500));
+
+    _this.settings = {
+      volumes: {
+        0: 0,
+        1: 0.2,
+        2: 0.25
+      }
+    };
+
+    // Generate three random patterns
+    _this.settings.patterns = [];
+    for (var i = 0; i < 3; i++) {
+      var pattern = [];
+      var nbNotes = 3 + Math.round(Math.random());
+      for (var j = 0; j < nbNotes; j++) {
+        // third pattern is mixolydian
+        pattern.push((i < 2 ? _this.color : _this.mixolydian).notes()[Math.floor(Math.random() * _this.color.notes().length)].scientific());
+      }
+      _this.settings.patterns.push(pattern);
+    }
+    return _this;
+  }
+
+  _createClass(WhistlePlayer, [{
+    key: 'changeMeasure',
+    value: function changeMeasure(index) {
+      var _this2 = this;
+
+      var measure = this.sheet[index];
+
+      if (measure.active) {
+        setTimeout(function () {
+          _this2.whistle.playNotes(_this2.settings.patterns[measure.pattern]);
+        }, measure.delay + Math.random() * 0.4 * measure.delay - 0.2 * measure.delay);
+      }
+
+      if (measure.volume) {
+        this.whistle.turnVolume(this.settings.volumes[measure.volume.level], measure.volume.delay);
+      }
+
+      if (measure.pace) {
+        this.whistle.turnPace(measure.pace.value, measure.pace.delay);
+      }
+    }
+  }]);
+
+  return WhistlePlayer;
+}(_player2.default);
+
+exports.default = WhistlePlayer;
+
+/***/ }),
+/* 44 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
