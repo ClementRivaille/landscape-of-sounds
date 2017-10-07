@@ -2,3 +2,5 @@ node_modules
 dev
 *.sublime-project
 *.sublime-workspace
+*.map
+npm-debug.log

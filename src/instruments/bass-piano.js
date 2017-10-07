@@ -52,7 +52,7 @@ class BassPiano {
     // this.oscillator.addEffect(reverb);
 
 
-    this.oscillator.volume = 0.2;
+    this.oscillator.volume = 0.1;
   }
 
   play(note, stop) {
@@ -61,6 +61,7 @@ class BassPiano {
       while(this.playing.length > 0) {
         const oscillator = this.playing.pop();
         oscillator.stop();
+        oscillator.disconnect();
       }
     }
     
@@ -68,6 +69,9 @@ class BassPiano {
     this.wave2.frequency = teoria.note(note).interval('P-8').fq();
 
     this.oscillator.play();
+    setTimeout(() => {
+      this.oscillator.stop();
+    }, 100);
 
     this.playing.push(this.oscillator);
     this.startDecay(this.oscillator, this.playing.length - 1);
@@ -76,14 +80,13 @@ class BassPiano {
   }
 
   startDecay(oscillator, index) {
-    this.soundConsole.progressiveChange(oscillator, 'volume', 0, 'bassDecay', this.decay);
-
-    // Stop oscillator once done
-    setTimeout(()=> {
+    this.soundConsole.progressiveChange(oscillator, 'volume', 0, 'bassDecay', this.decay).then( () => {;
+      // Stop oscillator once done
       oscillator.stop();
+      oscillator.disconnect();
       if(this.playing[index] === oscillator)
         this.playing.splice(index, 1);
-    }, this.decay);
+    });
   }
 }
 

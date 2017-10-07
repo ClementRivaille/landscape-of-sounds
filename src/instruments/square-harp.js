@@ -65,7 +65,7 @@ class SquareHarp {
   }
 
   turnPace(pace, delay = 4000) {
-    this.soundConsole.progressiveChange(this.options, 'pace', pace, 'harpegePace', delay);
+    return this.soundConsole.progressiveChange(this.options, 'pace', pace, 'harpegePace', delay);
   }
 
   setChord(base, chord) {

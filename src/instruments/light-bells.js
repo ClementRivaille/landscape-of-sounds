@@ -17,7 +17,9 @@ class LightBells {
       let bell = this.createBell(note.interval('P8').fq());
       setTimeout(() => {
         bell.play();
-        this.soundConsole.progressiveChange(bell, 'volume', 0, 'bell' + Math.random() * 10, 2000);
+        this.soundConsole.progressiveChange(bell, 'volume', 0, 'bell' + Math.random() * 10, 2000).then(() => {
+          bell.disconnect();
+        });
       }, Math.random() * 1500);
     }
   }
@@ -29,7 +31,7 @@ class LightBells {
         type: 'triangle',
         frequency: frequency,
         attack: 0.01,
-        volume: 0.2
+        volume: 0.1
       },
     });
 

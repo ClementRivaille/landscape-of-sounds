@@ -6,10 +6,13 @@ import SquareHarp from './instruments/square-harp';
 import Vibraphone from './instruments/vibraphone';
 import ChordBeat from './instruments/chord-beat';
 import TriangleChord from './instruments/triangle-chord'
-import WaveBass from './instruments/wave-bass';
+import Tuba from './instruments/tuba';
 import Whistle from './instruments/whistle';
 
+import Conductor from './conductor';
+
 import teoria from 'teoria';
+import Pizzicato from 'pizzicato';
 window.teoria = teoria;
 let scaleNotes = teoria.scale('a4', 'major').notes();
 
@@ -36,7 +39,7 @@ const triangleChord = new TriangleChord();
 triangleChord.playChord('a4', 'M7');
 let trianglePlaying = false;
 
-const waveBass = new WaveBass();
+const waveBass = new Tuba();
 waveBass.setNote('E2');
 
 const whistle = new Whistle();
@@ -45,6 +48,7 @@ let shift = false
 let someNotes = ['a4', 'c#4', 'e4', 'g#4', 'b4'];
 let index = 0;
 
+Pizzicato.volume = 0.3;
 window.playA4 = function() {
   bassPiano.play(shift ? 'c#3' : 'a2', true);
 }
@@ -133,4 +137,20 @@ window.switchChord = function() {
     squareHarp.setChord('c#3', 'm');
   }
 
+}
+
+window.createConductor = function() {
+  let conductor = new Conductor();
+  conductor.playMeasure(0);
+  document.getElementById('intro').className += ' hidden';
+  document.getElementById('intro').setAttribute('aria-hidden', true);
+  document.getElementById('playing').className = '';
+  document.getElementById('playing').setAttribute('aria-hidden', false);
+}
+
+window.playInstruments = function() {
+  document.getElementById('intro').className += ' hidden';
+  document.getElementById('intro').setAttribute('aria-hidden', true);
+  document.getElementById('instruments').className = '';
+  document.getElementById('instruments').setAttribute('aria-hidden', false);
 }
