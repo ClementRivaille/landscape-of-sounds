@@ -49,3 +49,12 @@ button {
 li {
   margin-bottom: 0.6em;
 }
+
+#source {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#source a {
+  color: #bb3780;
+}
