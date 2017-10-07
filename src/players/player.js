@@ -10,13 +10,13 @@ class Player {
 
     this.changeMeasure = this.changeMeasure.bind(this);
     this.stop = this.stop.bind(this);
-    this.eventEmitter.suscribe('changeMeasure', this.changeMeasure);
-    this.eventEmitter.suscribe('stop', this.stop);
+    this.eventEmitter.subscribe('changeMeasure', this.changeMeasure);
+    this.eventEmitter.subscribe('stop', this.stop);
   }
 
   stop() {
-    this.eventEmitter.unsuscribe('changeMeasure', this.changeMeasure);
-    this.eventEmitter.unsuscribe('stop', this.stop);
+    this.eventEmitter.unsubscribe('changeMeasure', this.changeMeasure);
+    this.eventEmitter.unsubscribe('stop', this.stop);
   }
 }
 

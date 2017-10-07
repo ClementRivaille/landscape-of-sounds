@@ -3,18 +3,18 @@ class EventEmitter {
     this.listeners = {};
   }
 
-  suscribe(event, callback) {
+  subscribe(event, callback) {
     this.listeners[event] = this.listeners[event] || [];
     this.listeners[event].push(callback);
   }
 
-  unsuscribe(event, callback) {
-    if (this.listeners.event) {
-      let index = this.listeners.findIndex((cb) => {
+  unsubscribe(event, callback) {
+    if (this.listeners[event]) {
+      let index = this.listeners[event].findIndex((cb) => {
         return cb === callback;
       });
       if (index > -1) {
-        this.listeners.splice(index, 1);
+        this.listeners[event].splice(index, 1);
       }
     }
   }
